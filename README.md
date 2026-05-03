@@ -1,4 +1,5 @@
 # 🌿 Green Thumb: Reforesting the Philippines
+### by: Gabrielle Comillas, Mickaela Lasala, Jerilee Rosales, Hazel Sy
 "Every donation plants a tree, building a better tomorrow."
 
 Green Thumb is a web application designed to jumpstart reforestation efforts across the Philippines. By connecting eco-conscious individuals with local farmers, we provide an accessible, transparent, and trackable way to restore native biodiversity and combat climate change.
