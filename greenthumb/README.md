@@ -1,16 +1,29 @@
-# React + Vite
+🌿 Green Thumb: Reforesting the Philippines
+"Every donation plants a tree, building a better tomorrow."
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Green Thumb is a web application designed to jumpstart reforestation efforts across the Philippines. By connecting eco-conscious individuals with local farmers, we provide an accessible, transparent, and trackable way to restore native biodiversity and combat climate change.
 
-Currently, two official plugins are available:
+📌 Project Overview
+Green Thumb addresses the critical issue of deforestation by allowing users to donate native trees to areas in most need. This project is a student-led initiative from the University of Santo Tomas, focusing on environmental sustainability and community empowerment.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🎯 Sustainable Development Goals (SDGs)
+Our project aligns with the following United Nations goals:
 
-## React Compiler
+SDG 8: Decent Work and Economic Growth (Supporting local farmers)
+SDG 10: Reduced Inequalities
+SDG 13: Climate Action
+SDG 15: Life on Land (Native species restoration)
+SDG 17: Partnerships for the Goals
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+✨ Key Features
+Native Tree Donation: Choose between Narra, Molave, and Aratilis—species selected for their fast growth and local biodiversity benefits.
+Real-Time Impact Tracking: A dedicated "Progress" section where users can enter their Tree ID to see the journey of their sapling.
+Educational Hub: Learn about the importance of native Philippine trees and the science behind our site selection.
+Secure Payments: Integration with GCash, Maya, and credit/debit cards.
+Farmer Partnership: Directly supporting local communities who handle the planting and maintenance.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🚀 Tech Stack (Optional - Fill this in based on your code)
+Frontend: [e.g., React.js / HTML & CSS]
+Backend: [e.g., Node.js / Python]
+Database: [e.g., Firebase / MongoDB]
+Payments: [e.g., PayMaya API / GCash Integration]
