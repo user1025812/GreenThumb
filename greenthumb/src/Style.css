@@ -41,12 +41,23 @@
     color: white !important;
     margin-bottom: 2rem;
 }
+.trackbanner-title {
+    font-family: "Margarine";
+    color: #084C32 !important;
+    margin-bottom: 2rem;
+}
 
 .banner-description {
     font-family: "Rethink Sans";
     font-size: 1.25rem;
     margin-bottom: 2rem;
     color: white;
+}
+.trackbanner-description {
+    font-family: "Rethink Sans";
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: black;
 }
 
 .banner-button {
