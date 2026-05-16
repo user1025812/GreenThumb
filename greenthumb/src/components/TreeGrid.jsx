@@ -1,9 +1,7 @@
-import React from 'react';
 import TreeCard from './TreeCard';
 import "../Style.css";
 
 const TreeGrid = () => {
-  // Creating an array of 12 items to represent the grid in the image
   const trees = Array(12).fill(null);
 
   return (

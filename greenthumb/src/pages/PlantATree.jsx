@@ -1,4 +1,3 @@
-import React from 'react';
 import PlantATreeBanner from '../components/PlantATreeBanner';
 import HowItWorks from '../components/HowItWorks';
 

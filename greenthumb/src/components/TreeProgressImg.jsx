@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "../Style.css";
 
+// used ai to control the view of cards per click
+
+//will replace once meron nang database
 const images = [
     "/trackbannerimg.png",
     "/trackbannerimg.png",
@@ -13,11 +16,11 @@ const images = [
     "/trackbannerimg.png",
     "/trackbannerimg.png",
 ];
-const INITIAL_COUNT = 3;   // first row: 3 images
-const LOAD_MORE_COUNT = 6; // each "See More" click: 2 rows of 3
+const INITIAL_COUNT = 3;   // first 3 rows
+const LOAD_MORE_COUNT = 6; // how many to add per click of see more
 
 const TrackProgressImg = () => {
-    // ── controls how many images are visible at a time ──
+    // controls how many images are visible at a time
     const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
     const handleSeeMore = () => {

@@ -10,9 +10,7 @@ import './Style.css';
 function App() {
     return (
             <div className="App min-h-screen bg-white font-sans text-gray-900">
-                
                 <Navbar />
-
                 <Routes>
                     <Route path="/" element={<PlantATree />} />
                     <Route path="/join" element={<Join />} />
@@ -21,7 +19,5 @@ function App() {
                 </Routes>
             </div>
     );
-
 }
-
 export default App;

@@ -1,4 +1,3 @@
-import React from "react";
 import "../Style.css";
 
 const HIWCard = ({number, title, description, img}) => {

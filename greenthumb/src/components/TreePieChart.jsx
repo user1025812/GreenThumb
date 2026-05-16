@@ -2,7 +2,6 @@ import { useState } from "react";
 
 // installed and used recharts. used ai to convert from tsx to jsx
 
-
 const data = [
   { name: "Survived", value: 400 },
   { name: "Growing", value: 300 },

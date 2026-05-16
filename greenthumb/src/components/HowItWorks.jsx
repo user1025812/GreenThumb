@@ -1,4 +1,3 @@
-import React from "react";
 import "../Style.css";
 import {motion} from "framer-motion";
 import HIWCard from "./HIWCard";

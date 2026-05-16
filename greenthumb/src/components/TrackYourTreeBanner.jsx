@@ -1,4 +1,3 @@
-import React from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuKeyRound } from "react-icons/lu";
 import { Link } from 'react-router-dom';

@@ -2,12 +2,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-
 // used ai to look for a map api and create the code
 
-
-
-// sample data — replace with your real data later
 const trees = [
   { id: 1, lat: 14.5995, lng: 120.9842, species: "Narra", date: "2025-01-15", status: "Growing" },
   { id: 2, lat: 14.6100, lng: 121.0100, species: "Molave", date: "2025-03-02", status: "Survived" },

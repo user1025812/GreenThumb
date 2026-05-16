@@ -1,9 +1,7 @@
 import { FaSeedling } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
-import React from 'react';
 import "../Style.css";
-
 
 const AccountInput = () => {
   return (

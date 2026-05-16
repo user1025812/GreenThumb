@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import "../Style.css";
 
+//used ai as guide for the carousel
+
+//sample only. will replace once may database na
 const purchasedTrees = [
     {
         id: 1,
@@ -35,7 +38,6 @@ const purchasedTrees = [
         treeID: "NR-2038-PH",
         status: "Growing",
     },
-    // ✅ removed empty object
 ];
 
 const STATUS_COLORS = {
@@ -44,7 +46,6 @@ const STATUS_COLORS = {
     "Needs Care": "#ee9b00",
 };
 
-// ── single card ──
 const TreeCard = ({ tree, onClick }) => (
     <div
         onClick={() => onClick(tree)}
@@ -68,7 +69,7 @@ const TreeCard = ({ tree, onClick }) => (
         <h4 style={{ color: "#084C32", fontWeight: "700", fontSize: "1.6rem", marginTop: "1rem" }}>{tree.name}</h4>
         <p style={{ fontSize: "0.9rem", color: "#888", marginTop: "0.25rem" }}>{tree.treeID}</p>
 
-        {/* ✅ status badge on card */}
+        //change to the speciesof trees later on. currently status of plants
         <span style={{
             marginTop: "0.75rem",
             background: STATUS_COLORS[tree.status] ?? "#ccc",
@@ -83,7 +84,6 @@ const TreeCard = ({ tree, onClick }) => (
     </div>
 );
 
-// ── detail modal ──
 const TreeDetail = ({ tree, onClose }) => (
     <div
         style={{
@@ -113,25 +113,23 @@ const TreeDetail = ({ tree, onClose }) => (
             >✕</button>
 
            <div style={{ display: "flex", flexDirection: "row", gap: "4rem", alignItems: "center" }}>
-    {/* left */}
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "300px" }}>
-        <img src={tree.image} alt={tree.name} style={{ width: "260px", height: "260px", objectFit: "contain" }} />
-        <h4 style={{ color: "#084C32", fontWeight: "700", fontSize: "2.4rem", marginTop: "0.75rem" }}>{tree.name}</h4>
-    </div>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: "300px" }}>
+                    <img src={tree.image} alt={tree.name} style={{ width: "260px", height: "260px", objectFit: "contain" }} />
+                    <h4 style={{ color: "#084C32", fontWeight: "700", fontSize: "2.4rem", marginTop: "0.75rem" }}>{tree.name}</h4>
+                </div>
+            </div>
 
-    {/* right */}
-    <div style={{ fontSize: "1.2rem", color: "#333", lineHeight: "1.9", textAlign: "left", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-        <p><strong>Username</strong>: {tree.username}</p>
-        <p><strong>Tree Species</strong>: {tree.name}</p>
-        <p><strong>Tree ID</strong>: {tree.treeID}</p>
-        <p><strong>Status</strong>: {tree.status}</p>
-    </div>
-</div>
+            <div style={{ fontSize: "1.2rem", color: "#333", lineHeight: "1.9", textAlign: "left", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <p><strong>Username</strong>: {tree.username}</p>
+                <p><strong>Tree Species</strong>: {tree.name}</p>
+                <p><strong>Tree ID</strong>: {tree.treeID}</p>
+                <p><strong>Status</strong>: {tree.status}</p>
+            </div>
         </div>
     </div>
 );
 
-// ── main carousel ──
+// carousel
 const TreeTracker = () => {
     const [startIndex, setStartIndex] = useState(0);
     const [selectedTree, setSelectedTree] = useState(null);

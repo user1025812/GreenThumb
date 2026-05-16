@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from 'react-router-dom';
 import { FaSeedling } from "react-icons/fa";
 import "../Style.css";
