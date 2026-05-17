@@ -29,7 +29,7 @@ function Home() {
         />
         <InfoBlock 
           title= "Native Species Only" 
-          description= "We prioritize Narra, Molave, and Anitolo." 
+          description= "We local native trees." 
           imgSrc= {iconNative}
         />
         <InfoBlock 
