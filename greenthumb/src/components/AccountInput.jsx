@@ -1,11 +1,22 @@
 import { FaSeedling } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
-import React from 'react';
+import React, {useState} from 'react';
 import "../Style.css";
 
 
-const AccountInput = () => {
+const AccountInput = ({onJoin}) => {
+
+  const [formData, setFormData] = useState({ name: '', email: '' });
+
+  const handleSubmit = (e) => {
+    if (formData.name && formData.email) {
+      onJoin(formData);
+    } else {
+      alert("Please enter your details first!");
+    }
+  };
+
   return (
     <div className="hero-container">
       <h1 className="hero-title">Ready to Plant a Tree?</h1>
@@ -19,7 +30,9 @@ const AccountInput = () => {
           <input 
             type="email" 
             placeholder="Email Address" 
-            className="input-field-with-icon" 
+            className="input-field-with-icon"
+            value={formData.email} 
+            onChange={(e) => setFormData({...formData, email: e.target.value})}
           />
         </div>
 
@@ -31,10 +44,11 @@ const AccountInput = () => {
             type="text" 
             placeholder="Name" 
             className="input-field-with-icon" 
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
           />
         </div>
 
-        <button type="button" className="btn-primary">
+        <button type="button" className="btn-primary" onClick={handleSubmit}>
             Plant a Tree Now <FaSeedling />
         </button>
       </form>
@@ -45,6 +59,7 @@ const AccountInput = () => {
         <img src="/gcash.png" alt="GCash" />
         <img src="/maya.png" alt="Maya" />
       </div>
+
     </div>
   );
 };
