@@ -7,7 +7,7 @@ function Navbar() {
       <div className="flex items-center gap-2">
         <span className="text-lg font-bold tracking-tight">Green Thumb</span>
       </div>
-      <div className="hidden md:flex items-center gap-8 uppercase text-[10px] tracking-widest">
+      <div className="hidden md:flex items-center gap-8 uppercase text-sm tracking-wide">
         <NavLink to="/" className="hover:text-green-300">HOME</NavLink>
         <NavLink to="/aboutus" className="hover:text-green-300">ABOUT US</NavLink>
         <NavLink to="/plant" className="hover:text-green-300">PLANT A TREE</NavLink>
@@ -33,7 +33,7 @@ function Navbar() {
       </div>
 
     
-      <el-disclosure id="mobile-menu" hidden className="absolute top-full left-0 right-0 bg-[#084c32] flex md:hidden flex-col items-center gap-4 py-6 uppercase text-[10px] tracking-widest divide-y divide-white/20">
+      <el-disclosure id="mobile-menu" hidden className="absolute top-full left-0 right-0 bg-[#084c32] flex md:hidden flex-col items-center gap-4 py-6 uppercase text-sm tracking-wide divide-y divide-white/20">
         <NavLink to="/" className="hover:text-green-300">HOME</NavLink>
         <NavLink to="/aboutus" className="hover:text-green-300">ABOUT US</NavLink>
         <NavLink to="/plant" className="hover:text-green-300">PLANT A TREE</NavLink>

@@ -37,45 +37,49 @@ const TreeGrid = ({selectedTrees = [], setSelectedTrees, canInteract}) => {
 
   // Badge count (total trees selected)
   const totalItems = selectedTrees.reduce((sum, item) => sum + item.quantity, 0);
+  
+  const TreeGrid = () => {
+    const trees = Array(12).fill(null);
 
-  return (
-    <div className="grid-wrapper"> 
-      <div className="grid-header">
-        <div className="header-spacer"></div>
+    return (
+      <div className="grid-wrapper"> 
+        <div className="grid-header">
+          <div className="header-spacer"></div>
 
-        <h2 className="grid-title">Choose Your Tree</h2>
+          <h2 className="grid-title">Choose Your Tree</h2>
 
-        <button className="cart-button" onClick={() => setIsSummaryOpen(true)}>
-          <HiOutlineShoppingCart />
-          {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
-          <span className="cart-text">View Basket</span>
-        </button>
+          <button className="cart-button" onClick={() => setIsSummaryOpen(true)}>
+            <HiOutlineShoppingCart />
+            {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+            <span className="cart-text">View Basket</span>
+          </button>
+        </div>
+        
+        <div className={`tree-grid ${!canInteract ? 'grid-disabled' : ''}`}> 
+          {TREE_DATA.map((tree) => (
+            <TreeCard 
+              key={tree.id}
+              tree={tree}
+              disabled={!canInteract} 
+              quantity={pendingQuantities[tree.id] || 0}
+              isAdded={selectedTrees.some(item => item.id === tree.id)}
+              onUpdateQuantity={(qty) => {
+                  if(!canInteract) return alert("Please enter your details above first!");
+                  updatePending(tree.id, qty);
+              }}
+              onConfirm={() => confirmAdd(tree)}
+            />
+          ))}
+        </div>
+
+        <TreeSummary 
+          selectedTrees={selectedTrees} 
+          isOpen={isSummaryOpen} 
+          onClose={() => setIsSummaryOpen(false)} 
+        />
       </div>
-      
-      <div className={`tree-grid ${!canInteract ? 'grid-disabled' : ''}`}> 
-        {TREE_DATA.map((tree) => (
-          <TreeCard 
-            key={tree.id}
-            tree={tree}
-            disabled={!canInteract} 
-            quantity={pendingQuantities[tree.id] || 0}
-            isAdded={selectedTrees.some(item => item.id === tree.id)}
-            onUpdateQuantity={(qty) => {
-                if(!canInteract) return alert("Please enter your details above first!");
-                updatePending(tree.id, qty);
-            }}
-            onConfirm={() => confirmAdd(tree)}
-          />
-        ))}
-      </div>
-
-      <TreeSummary 
-        selectedTrees={selectedTrees} 
-        isOpen={isSummaryOpen} 
-        onClose={() => setIsSummaryOpen(false)} 
-      />
-    </div>
-  );
+    );
+  }
 };
 
 export default TreeGrid;
