@@ -10,14 +10,7 @@
   font-weight: 800;
   font-style: normal;
 }
-nav {
-  background-color: #084c32;
-}
 
-.join-nav-btn {
-  background-color: white;
-  color: #ee9b00;
-}
 
 .trackbanner-content {
   padding: 120px 40px 60px;
@@ -35,3 +28,140 @@ nav {
   line-height: 1.7;
   max-width: 600px;
 }
+
+/* from je's code */
+nav {
+  background-color: #084c32;
+}
+
+.join-nav-btn {
+  background-color: white;
+  color: #ee9b00;
+}
+
+.title-name {
+  font-family: "Margarine", sans-serif;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+.subtitle-home {
+  font-family: "Rethink Sans", sans-serif;
+}
+.subtitle-span-home {
+  font-weight: 900;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+.plant-home-btn {
+  color: white;
+  background-color: #ee9b00;
+}
+
+.features-title, 
+.threestep-title, 
+.partners-title,
+.about-title {
+  color: #084c32;
+  font-family: "Margarine", sans-serif;
+}
+
+.features-subtitle, 
+.features-div, 
+.threestep-subtitle,
+.bio-subtitle {
+  color: #1e1e1e;
+  font-family: "Rethink Sans", sans-serif;
+}
+
+.features-btn {
+  color: #ee9b00;
+  border-bottom: #ee9b00;
+}
+
+.threestep-btn {
+  font-family: "Rethink Sans", sans-serif;
+  font-weight: 100;
+}
+
+.threestep-steps-no {
+  color: white;
+  font-family: "Margarine", sans-serif;
+  font-weight: bold;
+}
+
+.threestep-steps-title, .threestep-steps-subtitle {
+  font-family: "Rethink Sans", sans-serif;
+  color: white;
+}
+
+.homestat-title {
+  color: #084c32;
+  font-family: "Margarine", sans-serif;
+  font-weight: bold;
+}
+
+.homestats-card {
+  background-color: #ee9b00;
+  font-family: "Rethink Sans", sans-serif;
+}
+
+.homestats-card-subtitle {
+  font-weight: 100;
+}
+
+.track-input {
+  background-color: white !important;
+  border: #084c32 solid 1.5px;
+  font-family: "Rethink Sans", sans-serif;
+}
+
+.bio-title {
+  color: #084c32;
+  font-family: "Margarine", sans-serif;
+  font-weight: bold;
+}
+
+
+.purpose-btn, 
+.homestats-chart-title,
+.track-title,
+.track-btn,
+footer,
+.founder-section,
+.partners-name,
+.misvis,
+.about-subtitle,
+.faqs-subtitle, 
+.partners-btn, 
+.faqs-header, 
+.faqspage
+   {
+  font-family: "Rethink Sans", sans-serif;
+}
+
+
+.founder-title{
+    font-family: "Margarine", sans-serif;
+      text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.about-title-2{
+    color: #ee9b00;
+  font-family: "Margarine", sans-serif;
+}
+
+
+.faqs-title{
+      color: #084c32;
+  font-family: "Margarine", sans-serif;
+  letter-spacing: 0.7px;
+}
+
+.open {
+  display: initial;
+}
+
+.close {
+  display: none;
+}
+/* end of je's code */
