@@ -1,24 +1,5 @@
-// function BiodiversitySection() {
-//     return (
-//           <section className="py-20 max-w-6xl mx-auto px-10 grid md:grid-cols-2 gap-16 items-center">
-//         <img 
-//           src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80&w=800" 
-//           className="rounded-[40px] shadow-2xl" 
-//           alt="Philippine mountains" 
-//         />
-//         <div>
-//           <h2 className="text-3xl font-bold text-green-800 mb-6">Protecting Philippine Biodiversity</h2>
-//           <p className="text-gray-600 mb-8 text-sm leading-relaxed">
-//             We don't just plant anywhere. We carefully select locations based on soil type and local ecosystems. 
-//             By planting native species like Narra and Molave, we ensure our forests grow faster and stay healthier.
-//           </p>
-//           <a href="#" className="text-yellow-600 font-bold border-b border-yellow-600 pb-1">Learn more about Native Trees</a>
-//         </div>
-//       </section>
-//     )
-// }
-// export default BiodiversitySection;
 import { useState, useEffect } from "react";
+import ArrowButton from "./ArrowButton";
 
 function BiodiversityCarousel({ images = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -85,12 +66,10 @@ function BiodiversitySection() {
           We don't just plant anywhere. We carefully select locations based on soil type and existing ecosystems. 
           By planting native species like Narra and Molave, we ensure our forests grow faster and stay resilient.
         </p>
-        <a 
-          href="#" 
-         className="text-[#EE9B00] font-bold border-b-2 border-[#EE9B00] pb-1 hover:opacity-80 transition-opacity threestep-btn"
-        >
-          Learn more about our Native Trees &rarr;
-        </a>
+           <ArrowButton 
+            to="/aboutus" 
+            text="Learn more about our Native Trees" 
+            />
       </div>
     </div>
   );

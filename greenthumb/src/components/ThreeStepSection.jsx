@@ -1,4 +1,5 @@
 import howitworks from "../assets/howitworks.png";
+import ArrowButton from "./ArrowButton";
 
 function ThreeStepSection() {
   return (
@@ -11,9 +12,10 @@ function ThreeStepSection() {
           <p className="pt-3 text-xl threestep-subtitle px-8 pb-8">
             It takes just one click to make a greener future.
           </p>
-          <a href="#" className="text-[#EE9B00] font-bold border-b-2 border-[#EE9B00] pb-1 hover:opacity-80 transition-opacity threestep-btn text-lg">
-            How It Works &rarr;
-          </a>
+          <ArrowButton 
+            to="/aboutus" 
+            text="How It Works" 
+            />
         </div>
 
         <div 

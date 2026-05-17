@@ -1,5 +1,5 @@
 import { useState } from "react";
-import infoIcon from "../assets/info.png";
+import { Info } from 'lucide-react';
 
 const CHART_DATA = [
   { name: "Survived", value: 400 },
@@ -124,18 +124,32 @@ function HomeStats() {
           </div>
 
           {/* Cards Section */}
-          <div className="space-y-6 flex flex-col items-center md:items-start">
+         <div className="space-y-6 flex flex-col items-center md:items-start">
             <div className="homestats-card p-6 rounded-[40px] text-white text-center shadow-md w-full max-w-[500px]">
               <div className="text-4xl font-bold drop-shadow-md">23</div>
               <div className="text-2xl font-medium drop-shadow-lg homestats-card-subtitle">
                 Local Farmers Supported
               </div>
             </div>
+
             <div className="homestats-card p-8 rounded-[40px] text-white text-center shadow-md w-full max-w-[500px]">
               <div className="text-4xl font-bold drop-shadow-md">P 43, 325.00</div>
               <div className="text-2xl font-medium flex items-center justify-center gap-2 drop-shadow-lg homestats-card-subtitle">
-                Funds Raised for Planting
-                <img src={infoIcon} alt="info" className="w-4 h-4 object-contain brightness-0 invert" />
+                <span>Funds Raised for Planting</span>
+                
+                <div className="group relative flex items-center justify-center cursor-pointer">
+                  <Info className="w-5 h-5" />
+                  {/* tailwind tooltip */}
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-72 p-4 bg-white text-gray-800 text-sm text-black rounded-xl shadow-xl border border-gray-100 pointer-events-none
+                              opacity-0 translate-y-2 scale-95
+                              group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 
+                              transition-all duration-300 ease-out z-10">
+                    
+                    <p className="leading-relaxed text-center">
+                    Every peso contributes to reforestation. This total includes individual and corporate donations used to fund seed sourcing, tree nurturing, and long-term site maintenance across our target regions.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
