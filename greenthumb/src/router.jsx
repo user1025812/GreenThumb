@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 //used ai to navigate automatically to home rather than the app.jsx
 import Home from "./pages/Home";
 import App from "./App";
