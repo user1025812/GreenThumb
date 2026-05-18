@@ -79,49 +79,38 @@ export default function Trees() {
           <table className="users-table trees-table">
             <thead>
               <tr>
-                <th>Tree ID</th>
-                <th>Species</th>
-                <th>Assigned Farmer</th>
-                <th>Last Update</th>
-                <th>Current Location</th>
-                <th>Stage</th>
-                <th>Next Update Due</th>
-                <th>Photo Upload</th>
+                <th>Donation ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Tree Species</th>
+                <th>Quantity</th>
+                <th>Date of Request</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
+
               {filteredTrees.map((tree) => (
                 <tr key={tree._id}>
-                  <td>{tree.treeId}</td>
+                  <td>{tree.donationId}</td>
+                  <td>{tree.name}</td>
+                  <td>{tree.email}</td>
                   <td>{tree.species}</td>
-                  <td>{tree.assignedFarmer}</td>
-                  <td>{tree.lastUpdate}</td>
-                  <td>{tree.currentLocation}</td>
+                  <td>{tree.quantity}</td>
+                  <td>{tree.date}</td>
                   <td>
                     <span
                       className={
-                        tree.stage === "Pending"
+                        tree.status === "Pending"
                           ? "pending-status"
-                          : tree.stage === "Paid"
+                          : tree.status === "Paid"
                           ? "paid-status"
                           : "planted-status"
                       }
                     >
-                      {tree.stage}
+                      {tree.status}
                     </span>
-                  </td>
-                  <td>{tree.nextUpdateDue}</td>
-                  <td>
-                    {tree.photoUpload ? (
-                      <img
-                        src={tree.photoUpload}
-                        alt="Tree"
-                        style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "6px" }}
-                      />
-                    ) : (
-                      "No photo"
-                    )}
                   </td>
                   <td>
                     <div className="table-actions">
@@ -158,40 +147,49 @@ export default function Trees() {
               <X size={18} />
             </button>
             <h1 className="edit-title">
-              Tree Details
+              Tree Donation Details
             </h1>
             <div className="modal-info">
               <div className="info-row">
-                <p><strong>Tree ID:</strong> {selectedTree.treeId}</p>
+                <p>
+                  <strong>Donation ID:</strong>{" "}
+                  {selectedTree.donationId}
+                </p>
               </div>
+
               <div className="info-row">
-                <p><strong>Species:</strong> {selectedTree.species}</p>
+                <p>
+                  <strong>Name:</strong>{" "}
+                  {selectedTree.name}
+                </p>
               </div>
+
               <div className="info-row">
-                <p><strong>Assigned Farmer:</strong> {selectedTree.assignedFarmer}</p>
+                <p>
+                  <strong>Email:</strong>{" "}
+                  {selectedTree.email}
+                </p>
               </div>
+
               <div className="info-row">
-                <p><strong>Last Update:</strong> {selectedTree.lastUpdate}</p>
+                <p>
+                  <strong>Tree Species:</strong>{" "}
+                  {selectedTree.species}
+                </p>
               </div>
+
               <div className="info-row">
-                <p><strong>Current Location:</strong> {selectedTree.currentLocation}</p>
+                <p>
+                  <strong>Quantity:</strong>{" "}
+                  {selectedTree.quantity}
+                </p>
               </div>
+
               <div className="info-row">
-                <p><strong>Stage:</strong> {selectedTree.stage}</p>
-              </div>
-              <div className="info-row">
-                <p><strong>Next Update Due:</strong> {selectedTree.nextUpdateDue}</p>
-              </div>
-              <div className="info-row">
-                {selectedTree.photoUpload ? (
-                  <img
-                    src={selectedTree.photoUpload}
-                    alt="Tree"
-                    style={{ width: "100%", borderRadius: "12px", objectFit: "cover" }}
-                  />
-                ) : (
-                  <p><strong>Photo:</strong> No photo uploaded</p>
-                )}
+                <p>
+                  <strong>Status:</strong>{" "}
+                  {selectedTree.status}
+                </p>
               </div>
             </div>
           </div>
@@ -210,84 +208,65 @@ export default function Trees() {
             </button>
 
             <h1 className="edit-title">
-              Edit Tree
+              Edit Tree Request
             </h1>
 
             <div className="edit-form">
               <div className="input-group">
-                <label className="input-label">Species</label>
+                <label className="input-label">
+                  Tree Species
+                </label>
+
                 <input
                   type="text"
                   className="edit-input"
                   value={editingTree.species}
                   onChange={(e) =>
-                    setEditingTree({ ...editingTree, species: e.target.value })
+                    setEditingTree({
+                      ...editingTree,
+                      species: e.target.value,
+                    })
                   }
                 />
               </div>
 
               <div className="input-group">
-                <label className="input-label">Assigned Farmer</label>
+                <label className="input-label">
+                  Quantity
+                </label>
+
                 <input
-                  type="text"
+                  type="number"
+                  min="1"
                   className="edit-input"
-                  value={editingTree.assignedFarmer}
+                  value={editingTree.quantity}
                   onChange={(e) =>
-                    setEditingTree({ ...editingTree, assignedFarmer: e.target.value })
+                    setEditingTree({
+                      ...editingTree,
+                      quantity: e.target.value,
+                    })
                   }
                 />
               </div>
 
               <div className="input-group">
-                <label className="input-label">Current Location</label>
-                <input
-                  type="text"
-                  className="edit-input"
-                  value={editingTree.currentLocation}
-                  onChange={(e) =>
-                    setEditingTree({ ...editingTree, currentLocation: e.target.value })
-                  }
-                />
-              </div>
-
-              <div className="input-group">
-                <label className="input-label">Stage</label>
+                <label className="input-label">
+                  Status
+                </label>
                 <select
                   className="edit-input status-select"
-                  value={editingTree.stage}
+                  value={editingTree.status}
                   onChange={(e) =>
-                    setEditingTree({ ...editingTree, stage: e.target.value })
+                    setEditingTree({
+                      ...editingTree,
+                      status: e.target.value,
+                    })
                   }
                 >
                   <option>Pending</option>
                   <option>Paid</option>
                   <option>Planted</option>
                 </select>
-              </div>
-
-              <div className="input-group">
-                <label className="input-label">Next Update Due</label>
-                <input
-                  type="date"
-                  className="edit-input"
-                  value={editingTree.nextUpdateDue}
-                  onChange={(e) =>
-                    setEditingTree({ ...editingTree, nextUpdateDue: e.target.value })
-                  }
-                />
-              </div>
-
-              <div className="input-group">
-                <label className="input-label">Photo Upload</label>
-                <input
-                  type="text"
-                  className="edit-input"
-                  placeholder="Image URL"
-                  value={editingTree.photoUpload}
-                  onChange={(e) =>
-                    setEditingTree({ ...editingTree, photoUpload: e.target.value })
-                  }
-                />
               </div>
 
               <button
