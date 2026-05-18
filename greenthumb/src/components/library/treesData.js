@@ -1,24 +1,8 @@
-import Dita from "../../assets/Dita.png";
-import Araucaria from "../../assets/Araucaria.png";
-import Aunasin from "../../assets/Aunasin.jpg";
-import NeemTree from "../../assets/NeemTree.jpg";
-import Botong from "../../assets/Botong.jpg";
-import Napoleon from "../../assets/Napoleon.jpg";
-import BottleBrush from "../../assets/BottleBrush.jpg";
-import Bitaog from "../../assets/Bitaog.jpg";
-import YlangYlang from "../../assets/YlangYlang.jpg";
-import Kalingag from "../../assets/Kalingag.jpg";
-import BagawakMorado from "../../assets/BagawakMorado.jpg";
-import Salingbobog from "../../assets/Salingbobog.jpg";
-import HandkerchiefTree from "../../assets/HandkerchiefTree.jpg";
-import Katmon from "../../assets/Katmon.jpg";
-import RainbowTree from "../../assets/RainbowTree.jpg";
-
 const trees = [
   {
     id: 1,
     name: "Dita",
-    image: Dita,
+    image: "/Dita.png",
     familyName: "Apocynaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-001",
@@ -41,7 +25,7 @@ const trees = [
   {
     id: 2,
     name: "Araucaria",
-    image: Araucaria,
+    image: "/Araucaria.png",
     familyName: "Araucariaceae",
     conservationStatus: "Vulnerable",
     treeId: "TRE-002",
@@ -67,7 +51,7 @@ const trees = [
   {
     id: 3,
     name: "Aunasin",
-    image: Aunasin,
+    image: "/Aunasin.jpg",
     familyName: "Primulaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-003",
@@ -90,7 +74,7 @@ const trees = [
   {
     id: 4,
     name: "Neem Tree",
-    image: NeemTree,
+    image: "/NeemTree.jpg",
     familyName: "Meliaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-004",
@@ -113,7 +97,7 @@ const trees = [
   {
     id: 5,
     name: "Botong",
-    image: Botong,
+    image: "/Botong.jpg",
     familyName: "Lecythidaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-005",
@@ -136,7 +120,7 @@ const trees = [
   {
     id: 6,
     name: "Napoleon's Plume",
-    image: Napoleon,
+    image: "/Napoleon.jpg",
     familyName: "Fabaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-006",
@@ -158,7 +142,7 @@ const trees = [
   {
     id: 7,
     name: "Bottle Brush Tree",
-    image: BottleBrush,
+    image: "/BottleBrush.jpg",
     familyName: "Myrtaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-007",
@@ -180,7 +164,7 @@ const trees = [
   {
     id: 8,
     name: "Bitaog",
-    image: Bitaog,
+    image: "/Bitaog.jpg",
     familyName: "Calophyllaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-008",
@@ -202,7 +186,7 @@ const trees = [
   {
     id: 9,
     name: "Ylang-Ylang",
-    image: YlangYlang,
+    image: "/YlangYlang.jpg",
     familyName: "Annonaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-009",
@@ -224,7 +208,7 @@ const trees = [
   {
     id: 10,
     name: "Kalingag",
-    image: Kalingag,
+    image: "/Kalingag.jpg",
     familyName: "Lauraceae",
     conservationStatus: "Near Threatened",
     treeId: "TRE-010",
@@ -246,7 +230,7 @@ const trees = [
   {
     id: 11,
     name: "Bagawak Morado",
-    image: BagawakMorado,
+    image: "/BagawakMorado.jpg",
     familyName: "Lamiaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-011",
@@ -268,7 +252,7 @@ const trees = [
   {
     id: 12,
     name: "Salingbobog",
-    image: Salingbobog,
+    image: "/Salingbobog.jpg",
     familyName: "Capparaceae",
     conservationStatus: "Least Concern",
     treeId: "TRE-012",
@@ -290,7 +274,7 @@ const trees = [
   {
     id: 13,
     name: "Handkerchief Tree",
-    image: HandkerchiefTree,
+    image: "/HandkerchiefTree.jpg",
     familyName: "Fabaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-013",
@@ -312,7 +296,7 @@ const trees = [
   {
     id: 14,
     name: "Katmon",
-    image: Katmon,
+    image: "/Katmon.jpg",
     familyName: "Dilleniaceae",
     conservationStatus: "Near Threatened",
     treeId: "TRE-014",
@@ -334,7 +318,7 @@ const trees = [
   {
     id: 15,
     name: "Rainbow Tree",
-    image: RainbowTree,
+    image: "/RainbowTree.jpg",
     familyName: "Myrtaceae",
     conservationStatus: "Not Evaluated",
     treeId: "TRE-015",

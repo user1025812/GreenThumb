@@ -187,9 +187,27 @@ export default function Trees() {
 
               <div className="info-row">
                 <p>
-                  <strong>Status:</strong>{" "}
-                  {selectedTree.status}
+                  <strong>Date of Request:</strong>{" "}
+                  {selectedTree.date}
                 </p>
+              </div>
+
+              <div className="info-row">
+                <p>
+                  <strong>Status:</strong>{" "}
+                </p>
+
+                <span
+                  className={
+                    selectedTree.status === "Pending"
+                      ? "pending-status"
+                      : selectedTree.status === "Paid"
+                      ? "paid-status"
+                      : "planted-status"
+                  }
+                >
+                  {selectedTree.status}
+                </span>
               </div>
             </div>
           </div>
@@ -208,7 +226,7 @@ export default function Trees() {
             </button>
 
             <h1 className="edit-title">
-              Edit Tree Request
+              Edit Tree Status
             </h1>
 
             <div className="edit-form">
@@ -221,12 +239,7 @@ export default function Trees() {
                   type="text"
                   className="edit-input"
                   value={editingTree.species}
-                  onChange={(e) =>
-                    setEditingTree({
-                      ...editingTree,
-                      species: e.target.value,
-                    })
-                  }
+                  disabled
                 />
               </div>
 
@@ -240,12 +253,7 @@ export default function Trees() {
                   min="1"
                   className="edit-input"
                   value={editingTree.quantity}
-                  onChange={(e) =>
-                    setEditingTree({
-                      ...editingTree,
-                      quantity: e.target.value,
-                    })
-                  }
+                  disabled
                 />
               </div>
 

@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {Bell, ChevronDown, LogOut,} from "lucide-react";
-import logo from "../assets/logo.png";
-import longlogo from "../assets/longlogo.png";
 import "../Dashboard.css";
+import adminLogo from "../../assets/adminLogo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
-
-  //Replace later with login data
+  const storedUser = JSON.parse(
+    localStorage.getItem("user")
+  );
   const user = {
-    name: "Hazel Sy",
-    username: "@hazelsy",
-  };
+  name: storedUser?.name || "Admin",
+  username: storedUser?.username || "@admin",
+};
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -26,7 +26,7 @@ export default function Navbar() {
       <div className="logo-container">
     <NavLink to="/home">
         <img 
-            src={longlogo} 
+            src={adminLogo} 
             alt="GreenThumbs" 
             className="h-14 w-auto object-contain -my-8 max-w-[150px]" 
         />

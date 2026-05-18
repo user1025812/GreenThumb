@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const treeRoutes = require("./routes/treeRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const progressRoutes = require("./routes/progressRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/trees", treeRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/progress", progressRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 //MONGODB CONNECTION
 mongoose

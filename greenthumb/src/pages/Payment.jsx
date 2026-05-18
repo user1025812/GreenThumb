@@ -93,16 +93,10 @@ export default function Payment() {
         </div>
       </div>
 
-     {/* VIEW MODAL */}
+     {/*VIEW MODAL*/}
 {showViewModal && selectedPayment && (
-  <div
-    className="modal-overlay"
-    onClick={() => setShowViewModal(false)}
-  >
-    <div
-      className="tree-details-modal"
-      onClick={(e) => e.stopPropagation()}
-    >
+  <div className="modal-overlay">
+    <div className="profile-modal">
       <button
         className="close-modal"
         onClick={() => setShowViewModal(false)}
@@ -110,45 +104,61 @@ export default function Payment() {
         ✕
       </button>
 
-      <h2 className="tree-details-title">
+      <h1 className="edit-title">
         Payment Details
-      </h2>
+      </h1>
 
-      <div className="tree-details-card">
-        <p>
-          <strong>Transaction ID:</strong>{" "}
-          {selectedPayment.transactionId}
-        </p>
+      <div className="modal-info">
 
-        <p>
-          <strong>Donation ID:</strong>{" "}
-          {selectedPayment.donationId}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Transaction ID:</strong>{" "}
+            {selectedPayment.transactionId}
+          </p>
+        </div>
 
-        <p>
-          <strong>Donor:</strong>{" "}
-          {selectedPayment.donor}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Donation ID:</strong>{" "}
+            {selectedPayment.donationId}
+          </p>
+        </div>
 
-        <p>
-          <strong>Amount:</strong>{" "}
-          {selectedPayment.amount}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Donor:</strong>{" "}
+            {selectedPayment.donor}
+          </p>
+        </div>
 
-        <p>
-          <strong>Payment Method:</strong>{" "}
-          {selectedPayment.method}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Amount:</strong>{" "}
+            {selectedPayment.amount}
+          </p>
+        </div>
 
-        <p>
-          <strong>Reference No:</strong>{" "}
-          {selectedPayment.reference}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Payment Method:</strong>{" "}
+            {selectedPayment.method}
+          </p>
+        </div>
 
-        <p>
-          <strong>Date Paid:</strong>{" "}
-          {selectedPayment.date}
-        </p>
+        <div className="info-row">
+          <p>
+            <strong>Reference No:</strong>{" "}
+            {selectedPayment.reference}
+          </p>
+        </div>
+
+        <div className="info-row">
+          <p>
+            <strong>Date Paid:</strong>{" "}
+            {selectedPayment.date}
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
