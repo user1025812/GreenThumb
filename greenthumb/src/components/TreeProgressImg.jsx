@@ -16,23 +16,32 @@ const images = [
     "/trackbannerimg.png",
     "/trackbannerimg.png",
 ];
-const INITIAL_COUNT = 3;   // first 3 rows
-const LOAD_MORE_COUNT = 6; // how many to add per click of see more
+const INITIAL_COUNT = 3;
+const LOAD_MORE_COUNT = 6;
 
-const TrackProgressImg = () => {
-    // controls how many images are visible at a time
+const TrackProgressImg = ({ onAllShown, onCollapse }) => {
     const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
 
     const handleSeeMore = () => {
-        setVisibleCount(prev => Math.min(prev + LOAD_MORE_COUNT, images.length));
+        const newCount = Math.min(visibleCount + LOAD_MORE_COUNT, images.length);
+        setVisibleCount(newCount);
+        if (newCount >= images.length) {
+            onAllShown();
+        }
     };
+
+    const handleSeeLess = () => {
+    const newCount = Math.max(visibleCount - LOAD_MORE_COUNT, INITIAL_COUNT);
+    setVisibleCount(newCount);
+    if (newCount < images.length) {
+        onCollapse();
+    }
+};
 
     const hasMore = visibleCount < images.length;
 
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem" }}>
-
-            {/* image grid — only renders up to visibleCount */}
             <div style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
@@ -55,16 +64,25 @@ const TrackProgressImg = () => {
                 ))}
             </div>
 
-            {/* See More button — hides when all images are shown */}
-            {hasMore && (
-                <button
-                    onClick={handleSeeMore}
-                    className="bg-[#ee9b00] hover:bg-[#d4890a] text-white font-bold py-2 px-8 rounded-full transition"
-                >
-                    See More
-                </button>
-            )}
+            <div style={{ display: "flex", gap: "1rem" }}>
+                {hasMore && (
+                    <button
+                        onClick={handleSeeMore}
+                        className="bg-[#ee9b00] hover:bg-[#d4890a] text-white font-bold py-2 px-8 rounded-full transition"
+                    >
+                        See More
+                    </button>
+                )}
 
+                {visibleCount > INITIAL_COUNT && (
+                    <button
+                        onClick={handleSeeLess}
+                        className="bg-[#084c32] hover:bg-[#063a25] text-white font-bold py-2 px-8 rounded-full transition"
+                    >
+                        See Less
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

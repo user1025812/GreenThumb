@@ -13,6 +13,12 @@ const purchasedTrees = [
         username: "Ana Santos",
         treeID: "NR-2037-PH",
         status: "Growing",
+        assignedFarmer: "Juan Dela Cruz",
+        lastUpdate: "2025-05-01",
+        currentLocation: "Batangas, Philippines",
+        stage: "Planted",
+        nextUpdateDue: "2025-08-01",
+        photoUpload: null,
     },
     {
         id: 2,
@@ -21,6 +27,12 @@ const purchasedTrees = [
         username: "Ben Reyes",
         treeID: "MV-1045-PH",
         status: "Survived",
+        assignedFarmer: "Maria Santos",
+        lastUpdate: "2025-04-15",
+        currentLocation: "Laguna, Philippines",
+        stage: "Planted",
+        nextUpdateDue: "2025-07-15",
+        photoUpload: null,
     },
     {
         id: 3,
@@ -29,6 +41,12 @@ const purchasedTrees = [
         username: "Clara Mendoza",
         treeID: "AR-3021-PH",
         status: "Needs Care",
+        assignedFarmer: "Pedro Reyes",
+        lastUpdate: "2025-03-20",
+        currentLocation: "Quezon, Philippines",
+        stage: "Pending",
+        nextUpdateDue: "2025-06-20",
+        photoUpload: null,
     },
     {
         id: 4,
@@ -37,6 +55,12 @@ const purchasedTrees = [
         username: "Diego Lim",
         treeID: "NR-2038-PH",
         status: "Growing",
+        assignedFarmer: "Ana Villanueva",
+        lastUpdate: "2025-04-01",
+        currentLocation: "Cebu, Philippines",
+        stage: "Planted",
+        nextUpdateDue: "2025-07-01",
+        photoUpload: null,
     },
 ];
 
@@ -69,7 +93,7 @@ const TreeCard = ({ tree, onClick }) => (
         <h4 style={{ color: "#084C32", fontWeight: "700", fontSize: "1.6rem", marginTop: "1rem" }}>{tree.name}</h4>
         <p style={{ fontSize: "0.9rem", color: "#888", marginTop: "0.25rem" }}>{tree.treeID}</p>
 
-        //change to the speciesof trees later on. currently status of plants
+        {/* change to the speciesof trees later on. currently status of plants */}
         <span style={{
             marginTop: "0.75rem",
             background: STATUS_COLORS[tree.status] ?? "#ccc",
@@ -120,11 +144,23 @@ const TreeDetail = ({ tree, onClose }) => (
             </div>
 
             <div style={{ fontSize: "1.2rem", color: "#333", lineHeight: "1.9", textAlign: "left", width: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                <p><strong>Username</strong>: {tree.username}</p>
-                <p><strong>Tree Species</strong>: {tree.name}</p>
-                <p><strong>Tree ID</strong>: {tree.treeID}</p>
-                <p><strong>Status</strong>: {tree.status}</p>
-            </div>
+    <p><strong>Username</strong>: {tree.username}</p>
+    <p><strong>Tree Species</strong>: {tree.name}</p>
+    <p><strong>Tree ID</strong>: {tree.treeID}</p>
+    <p><strong>Status</strong>: {tree.status}</p>
+    <p><strong>Assigned Farmer</strong>: {tree.assignedFarmer}</p>
+    <p><strong>Last Update</strong>: {tree.lastUpdate}</p>
+    <p><strong>Current Location</strong>: {tree.currentLocation}</p>
+    <p><strong>Stage</strong>: {tree.stage}</p>
+    <p><strong>Next Update Due</strong>: {tree.nextUpdateDue}</p>
+    {tree.photoUpload && (
+        <img
+            src={tree.photoUpload}
+            alt="Tree progress"
+            style={{ width: "100%", borderRadius: "12px", objectFit: "cover", marginTop: "0.5rem" }}
+        />
+    )}
+</div>
         </div>
     </div>
 );

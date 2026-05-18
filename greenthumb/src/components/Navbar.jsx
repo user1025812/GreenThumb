@@ -13,13 +13,13 @@ function Navbar() {
         />
       </div>
       <div className="hidden md:flex items-center gap-8 uppercase text-sm tracking-wide">
-        <NavLink to="/" className="hover:text-green-300">HOME</NavLink>
+        <NavLink to="/home" className="hover:text-green-300">HOME</NavLink>
         <NavLink to="/aboutus" className="hover:text-green-300">ABOUT US</NavLink>
-        <NavLink to="/plant" className="hover:text-green-300">PLANT A TREE</NavLink>
+        <NavLink to="/plantatree" className="hover:text-green-300">PLANT A TREE</NavLink>
         <NavLink to="/library" className="hover:text-green-300">GREEN LIBRARY</NavLink>
-        <NavLink to="/progress" className="hover:text-green-300">PROGRESS</NavLink>
+        <NavLink to="/progresspage" className="hover:text-green-300">PROGRESS</NavLink>
         <NavLink to="/faqs" className="hover:text-green-300">FAQs</NavLink>
-        <button className="join-nav-btn px-3 py-1 rounded-full font-bold">JOIN</button>
+        <NavLink to="/join" className="join-nav-btn px-3 py-1 rounded-full font-bold">JOIN</NavLink>
       </div>
       <div className="md:hidden flex items-center">
         <button 

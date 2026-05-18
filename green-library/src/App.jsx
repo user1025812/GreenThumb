@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Library from "./pages/Library";
-import TreeDetails from "./pages/TreeDetails";
+import TreeDetails from "../../greenthumb/src/pages/TreeDetails";
 import "./App.css";
 
 function App() {

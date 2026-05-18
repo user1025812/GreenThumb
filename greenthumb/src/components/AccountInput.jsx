@@ -1,7 +1,9 @@
 import { FaSeedling } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import Dashboard from "../pages/Dashboard"; 
 import "../Style.css";
 
 
@@ -51,6 +53,8 @@ const AccountInput = ({onJoin}) => {
         <button type="button" className="btn-primary" onClick={handleSubmit}>
             Plant a Tree Now <FaSeedling />
         </button>
+        
+        <NavLink to="/dashboard" className="btn-primary">Admin</NavLink>
       </form>
 
       <div className="payment-icons">
