@@ -72,7 +72,9 @@ const TreeCard = ({ tree, quantity, onUpdateQuantity, onConfirm, isAdded }) => {
           </div>
         )}
       </div>
+      
     </div>
+    
   );
 };
 
