@@ -34,7 +34,7 @@ function AppContent() {
             {!isDashboard && <Navbar />}
             {!isDashboard && <QuickLink />}
             <Routes>
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/join" element={<Join selectedTrees={selectedTrees} setSelectedTrees={setSelectedTrees} />} />
                 <Route path="/plantatree" element={<PlantATree />} />
                 <Route path="/tracker" element={<TreeTracker />} />
