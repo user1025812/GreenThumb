@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/DashboardNavbar";
-import {Search, Eye, Pencil, X,} from "lucide-react";
+import { Search, Eye, Pencil, X } from "lucide-react";
+import "../Dashboard.css";
+
 
 export default function Trees() {
-
   const [trees, setTrees] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedTree, setSelectedTree] = useState(null);
   const [editingTree, setEditingTree] = useState(null);
 
-  //FETCH TREES
+  // FETCH TREES
   useEffect(() => {
-
     fetch("http://localhost:5000/api/trees")
       .then((res) => res.json())
       .then((data) => {
@@ -20,17 +20,18 @@ export default function Trees() {
       .catch((err) => {
         console.log(err);
       });
-
   }, []);
 
-  //SEARCH
+  // UPDATED SEARCH: Now also checks location or specific site strings
   const filteredTrees = trees.filter(
     (tree) =>
       tree.name.toLowerCase().includes(search.toLowerCase()) ||
-      tree.email.toLowerCase().includes(search.toLowerCase())
+      tree.email.toLowerCase().includes(search.toLowerCase()) ||
+      (tree.location && tree.location.toLowerCase().includes(search.toLowerCase())) ||
+      (tree.specificSite && tree.specificSite.toLowerCase().includes(search.toLowerCase()))
   );
 
-  //SAVE EDIT
+  // SAVE EDIT
   const handleSave = () => {
     fetch(`http://localhost:5000/api/trees/${editingTree._id}`, {
       method: "PUT",
@@ -42,9 +43,7 @@ export default function Trees() {
       .then((res) => res.json())
       .then((updatedTree) => {
         const updatedTrees = trees.map((tree) =>
-          tree._id === updatedTree._id
-            ? updatedTree
-            : tree
+          tree._id === updatedTree._id ? updatedTree : tree
         );
         setTrees(updatedTrees);
         setEditingTree(null);
@@ -60,14 +59,12 @@ export default function Trees() {
       <div className="users-wrapper">
         {/*HEADER*/}
         <div className="users-header">
-          <h1 className="users-heading">
-            Trees
-          </h1>
+          <h1 className="users-heading">Trees</h1>
           <div className="search-box">
             <Search size={16} color="#999" />
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search by name, email, or site..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -84,13 +81,14 @@ export default function Trees() {
                 <th>Email</th>
                 <th>Tree Species</th>
                 <th>Quantity</th>
+                <th>Region</th>       
+                <th>Specific Site</th> 
                 <th>Date of Request</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-
               {filteredTrees.map((tree) => (
                 <tr key={tree._id}>
                   <td>{tree.donationId}</td>
@@ -98,6 +96,8 @@ export default function Trees() {
                   <td>{tree.email}</td>
                   <td>{tree.species}</td>
                   <td>{tree.quantity}</td>
+                  <td>{tree.location}</td>    
+                  <td>{tree.specificSite}</td> 
                   <td>{tree.date}</td>
                   <td>
                     <span
@@ -146,49 +146,53 @@ export default function Trees() {
             >
               <X size={18} />
             </button>
-            <h1 className="edit-title">
-              Tree Donation Details
-            </h1>
+            <h1 className="edit-title">Tree Donation Details</h1>
             <div className="modal-info">
               <div className="info-row">
                 <p>
-                  <strong>Donation ID:</strong>{" "}
-                  {selectedTree.donationId}
+                  <strong>Donation ID:</strong> {selectedTree.donationId}
                 </p>
               </div>
 
               <div className="info-row">
                 <p>
-                  <strong>Name:</strong>{" "}
-                  {selectedTree.name}
+                  <strong>Name:</strong> {selectedTree.name}
                 </p>
               </div>
 
               <div className="info-row">
                 <p>
-                  <strong>Email:</strong>{" "}
-                  {selectedTree.email}
+                  <strong>Email:</strong> {selectedTree.email}
                 </p>
               </div>
 
               <div className="info-row">
                 <p>
-                  <strong>Tree Species:</strong>{" "}
-                  {selectedTree.species}
+                  <strong>Tree Species:</strong> {selectedTree.species}
                 </p>
               </div>
 
               <div className="info-row">
                 <p>
-                  <strong>Quantity:</strong>{" "}
-                  {selectedTree.quantity}
+                  <strong>Quantity:</strong> {selectedTree.quantity}
                 </p>
               </div>
 
               <div className="info-row">
                 <p>
-                  <strong>Date of Request:</strong>{" "}
-                  {selectedTree.date}
+                  <strong>Target Region:</strong> {selectedTree.location}
+                </p>
+              </div>
+
+              <div className="info-row">
+                <p>
+                  <strong>Specific Site:</strong> {selectedTree.specificSite}
+                </p>
+              </div>
+
+              <div className="info-row">
+                <p>
+                  <strong>Date of Request:</strong> {selectedTree.date}
                 </p>
               </div>
 
@@ -196,7 +200,6 @@ export default function Trees() {
                 <p>
                   <strong>Status:</strong>{" "}
                 </p>
-
                 <span
                   className={
                     selectedTree.status === "Pending"
@@ -225,16 +228,11 @@ export default function Trees() {
               <X size={18} />
             </button>
 
-            <h1 className="edit-title">
-              Edit Tree Status
-            </h1>
+            <h1 className="edit-title">Edit Tree Status</h1>
 
             <div className="edit-form">
               <div className="input-group">
-                <label className="input-label">
-                  Tree Species
-                </label>
-
+                <label className="input-label">Tree Species</label>
                 <input
                   type="text"
                   className="edit-input"
@@ -244,10 +242,7 @@ export default function Trees() {
               </div>
 
               <div className="input-group">
-                <label className="input-label">
-                  Quantity
-                </label>
-
+                <label className="input-label">Quantity</label>
                 <input
                   type="number"
                   min="1"
@@ -257,10 +252,19 @@ export default function Trees() {
                 />
               </div>
 
+              {/* Added Location reference to Edit Modal view so admins can see it */}
               <div className="input-group">
-                <label className="input-label">
-                  Status
-                </label>
+                <label className="input-label">Target Site</label>
+                <input
+                  type="text"
+                  className="edit-input"
+                  value={`${editingTree.location} — ${editingTree.specificSite}`}
+                  disabled
+                />
+              </div>
+
+              <div className="input-group">
+                <label className="input-label">Status</label>
                 <select
                   className="edit-input status-select"
                   value={editingTree.status}
@@ -277,10 +281,7 @@ export default function Trees() {
                 </select>
               </div>
 
-              <button
-                className="save-btn"
-                onClick={handleSave}
-              >
+              <button className="save-btn" onClick={handleSave}>
                 Save Changes
               </button>
             </div>
