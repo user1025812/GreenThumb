@@ -4,7 +4,7 @@ import PlantATree from './pages/PlantATree';
 import Join from './pages/Join';
 import ProgressPage from './pages/ProgressPage';
 import Navbar from './components/Navbar';
-import TreeTracker from './pages/TreeTracker';
+import TreeTracker from './components/TreeTracker';
 import QuickLink from './components/QuickLink';
 import Track from './pages/Track';
 import AboutUs from './pages/AboutUs';

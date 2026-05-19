@@ -1,14 +1,12 @@
-
 import Navbar from "../components/Navbar";
+import TrackYourTreeBanner from "../components/TrackYourTreeBanner";
 import TreeTracker from "../components/TreeTracker";
 
 const Track = () => {
     return (
-        <div
-            className="min-h-screen w-full bg-cover bg-center font-sans text-gray-900"
-            style={{ backgroundImage: "url('/trackbgimg.png')" }}
-        >
+        <div className="min-h-screen w-full font-sans text-gray-900">
             <Navbar />
+            <TrackYourTreeBanner />
             <TreeTracker />
         </div>
     );

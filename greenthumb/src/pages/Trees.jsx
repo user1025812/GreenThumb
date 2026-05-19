@@ -26,10 +26,12 @@ export default function Trees() {
 
   // SEARCH
   const filteredTrees = trees.filter(
-    (tree) =>
-      tree.name?.toLowerCase().includes(search.toLowerCase()) ||
-      tree.email?.toLowerCase().includes(search.toLowerCase())
-  );
+  (tree) =>
+    tree.name?.toLowerCase().includes(search.toLowerCase()) ||
+    tree.email?.toLowerCase().includes(search.toLowerCase()) ||
+    tree.species?.toLowerCase().includes(search.toLowerCase()) ||
+    tree.donationId?.toLowerCase().includes(search.toLowerCase())
+);
   // SAVE EDIT
   const handleSave = () => {
     fetch(`http://localhost:5000/api/trees/${editingTree._id}`, {
@@ -304,8 +306,10 @@ export default function Trees() {
                   }
                 >
                   <option>Pending</option>
-                  <option>Paid</option>
-                  <option>Planted</option>
+<option>Approved</option>
+<option>Paid</option>
+<option>Planted</option>
+<option>Rejected</option>
                 </select>
               </div>
               <button

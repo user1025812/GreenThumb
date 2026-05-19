@@ -1,22 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Info } from 'lucide-react';
 
-const CHART_DATA = [
-  { name: "Survived", value: 400 },
-  { name: "Growing", value: 300 },
-  { name: "Needs Care", value: 300 },
-];
-
-const COLORS = ["#084C32", "#4CAF50", "#ee9b00"];
-const TOTAL_TREES = CHART_DATA.reduce((sum, d) => sum + d.value, 0);
+const COLORS = ["#084C32", "#4CAF50", "#ee9b00", "#7384ff", "#f26da9", "#9d5ce5", "#00BCD4", "#E91E63"];
 
 const getSlices = (data) => {
+  const total = data.reduce((sum, d) => sum + d.value, 0) || 1;
   let cumulative = 0;
   return data.map((d, i) => {
-    const startAngle = (cumulative / TOTAL_TREES) * 2 * Math.PI - Math.PI / 2;
+    const startAngle = (cumulative / total) * 2 * Math.PI - Math.PI / 2;
     cumulative += d.value;
-    const endAngle = (cumulative / TOTAL_TREES) * 2 * Math.PI - Math.PI / 2;
-    return { ...d, startAngle, endAngle, color: COLORS[i] };
+    const endAngle = (cumulative / total) * 2 * Math.PI - Math.PI / 2;
+    return { ...d, startAngle, endAngle, color: COLORS[i % COLORS.length] };
   });
 };
 
@@ -37,7 +31,51 @@ const describeSlice = (cx, cy, innerR, outerR, startAngle, endAngle) => {
 
 function HomeStats() {
   const [activeIndex, setActiveIndex] = useState(null);
-  const slices = getSlices(CHART_DATA);
+  const [chartData, setChartData]     = useState([]);
+  const [totalTrees, setTotalTrees]   = useState(0);
+  const [farmersCount, setFarmersCount] = useState(0);
+  const [totalFunds, setTotalFunds]   = useState("0.00");
+
+  useEffect(() => {
+    // Species breakdown — same as dashboard pie chart
+    fetch("http://localhost:5000/api/dashboard/dashboard-data")
+      .then(res => res.json())
+      .then(data => {
+        const popularity = data.treePopularity || [];
+        const newChartData = popularity.map(item => ({
+          name:  String(item._id).trim(),
+          value: item.value,
+        }));
+        const total = newChartData.reduce((sum, d) => sum + d.value, 0);
+        setChartData(newChartData.length > 0 ? newChartData : [{ name: "No data", value: 1 }]);
+        setTotalTrees(total);
+      })
+      .catch(err => console.log(err));
+
+    // Farmer count from progress
+    fetch("http://localhost:5000/api/progress")
+      .then(res => res.json())
+      .then(data => {
+        const uniqueFarmers = new Set(
+          data.map(p => p.farmer).filter(f => f && f !== "Unassigned")
+        );
+        setFarmersCount(uniqueFarmers.size);
+      })
+      .catch(err => console.log(err));
+
+    // Total confirmed funds
+    fetch("http://localhost:5000/api/payments")
+      .then(res => res.json())
+      .then(data => {
+        const total = data
+          .filter(p => p.datePaid && p.datePaid !== "Pending")
+          .reduce((sum, p) => sum + (parseFloat(p.amount) || 0), 0);
+        setTotalFunds(total.toLocaleString("en-PH", { minimumFractionDigits: 2 }));
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  const slices = getSlices(chartData);
   const cx = 250, cy = 200, innerR = 80, outerR = 120;
 
   return (
@@ -49,104 +87,86 @@ function HomeStats() {
 
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div className="flex flex-col items-center">
-            <p className="font-bold text-black-900 mb-2 text-3xl homestats-chart-title" style={{ color: "#084C32" }}>
-              Trees Planted
+            <p className="font-bold mb-2 text-3xl homestats-chart-title" style={{ color: "#084C32" }}>
+              Tree Popularity
             </p>
-            
-            <div className="flex flex-col items-center justify-center">
-              <svg width={500} height={360} viewBox="0 0 500 360" className="w-full h-auto max-w-[500px]">
-                {slices.map((slice, i) => {
-                  const isActive = activeIndex === i;
-                  const r = isActive ? outerR + 10 : outerR;
-                  const midAngle = (slice.startAngle + slice.endAngle) / 2;
-                  const labelR = r + 30;
-                  const lx = cx + labelR * Math.cos(midAngle);
-                  const ly = cy + labelR * Math.sin(midAngle);
 
-                  return (
-                    <g
-                      key={i}
-                      onMouseEnter={() => setActiveIndex(i)}
-                      onMouseLeave={() => setActiveIndex(null)}
-                      style={{ cursor: "pointer" }}
-                      className="transition-all duration-200"
-                    >
-                      <path
-                        d={describeSlice(cx, cy, innerR, r, slice.startAngle, slice.endAngle)}
-                        fill={slice.color}
-                        opacity={activeIndex === null || isActive ? 1 : 0.6}
-                        className="transition-all duration-200"
-                      />
-                      {isActive && (
-                        <>
-                          <line
-                            x1={cx + (r + 2) * Math.cos(midAngle)}
-                            y1={cy + (r + 2) * Math.sin(midAngle)}
-                            x2={lx}
-                            y2={ly}
-                            stroke={slice.color}
-                            strokeWidth={1.5}
-                          />
-                          <text x={lx} y={ly - 8} textAnchor="middle" fill="#333" fontSize={13} fontWeight="600">
-                            {slice.name}
-                          </text>
-                          <text x={lx} y={ly + 8} textAnchor="middle" fill="#666" fontSize={12}>
-                            {slice.value} trees
-                          </text>
-                          <text x={lx} y={ly + 22} textAnchor="middle" fill="#999" fontSize={11}>
-                            {((slice.value / TOTAL_TREES) * 100).toFixed(1)}%
-                          </text>
-                        </>
-                      )}
-                    </g>
-                  );
-                })}
+            <svg width={500} height={360} viewBox="0 0 500 360" className="w-full h-auto max-w-[500px]">
+              {slices.map((slice, i) => {
+                const isActive  = activeIndex === i;
+                const r         = isActive ? outerR + 10 : outerR;
+                const midAngle  = (slice.startAngle + slice.endAngle) / 2;
+                const labelR    = r + 30;
+                const lx        = cx + labelR * Math.cos(midAngle);
+                const ly        = cy + labelR * Math.sin(midAngle);
 
-                {/* Center text indicators */}
-                <text x={cx} y={cy - 8} textAnchor="middle" fill="#084C32" fontSize={14} fontWeight="600">
-                  {activeIndex !== null ? slices[activeIndex].name : "Total"}
-                </text>
-                <text x={cx} y={cy + 12} textAnchor="middle" fill="#555" fontSize={13}>
-                  {activeIndex !== null ? `${slices[activeIndex].value} trees` : `${TOTAL_TREES} trees`}
-                </text>
-              </svg>
+                return (
+                  <g key={i}
+                    onMouseEnter={() => setActiveIndex(i)}
+                    onMouseLeave={() => setActiveIndex(null)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <path
+                      d={describeSlice(cx, cy, innerR, r, slice.startAngle, slice.endAngle)}
+                      fill={slice.color}
+                      opacity={activeIndex === null || isActive ? 1 : 0.6}
+                    />
+                    {isActive && (
+                      <>
+                        <line
+                          x1={cx + (r + 2) * Math.cos(midAngle)}
+                          y1={cy + (r + 2) * Math.sin(midAngle)}
+                          x2={lx} y2={ly}
+                          stroke={slice.color} strokeWidth={1.5}
+                        />
+                        <text x={lx} y={ly - 8} textAnchor="middle" fill="#333" fontSize={13} fontWeight="600">{slice.name}</text>
+                        <text x={lx} y={ly + 8} textAnchor="middle" fill="#666" fontSize={12}>{slice.value} donations</text>
+                        <text x={lx} y={ly + 22} textAnchor="middle" fill="#999" fontSize={11}>
+                          {totalTrees > 0 ? ((slice.value / totalTrees) * 100).toFixed(1) : 0}%
+                        </text>
+                      </>
+                    )}
+                  </g>
+                );
+              })}
+              <text x={cx} y={cy - 8} textAnchor="middle" fill="#084C32" fontSize={14} fontWeight="600">
+                {activeIndex !== null ? slices[activeIndex].name : "Total"}
+              </text>
+              <text x={cx} y={cy + 12} textAnchor="middle" fill="#555" fontSize={13}>
+                {activeIndex !== null ? `${slices[activeIndex].value}` : `${totalTrees} donations`}
+              </text>
+            </svg>
 
-              {/* Chart Legend */}
-              <div className="flex gap-6 mt-2">
-                {slices.map((slice, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-3 h-3 rounded-full" style={{ background: slice.color }} />
-                    {slice.name}
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-4 mt-2 justify-center">
+              {slices.map((slice, i) => (
+                <div key={i} className="flex items-center gap-2 text-sm text-gray-700">
+                  <div className="w-3 h-3 rounded-full" style={{ background: slice.color }} />
+                  {slice.name}
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Cards Section */}
-         <div className="space-y-6 flex flex-col items-center md:items-start">
+          <div className="space-y-6 flex flex-col items-center md:items-start">
             <div className="homestats-card p-6 rounded-[40px] text-white text-center shadow-md w-full max-w-[500px]">
-              <div className="text-4xl font-bold drop-shadow-md">23</div>
+              <div className="text-4xl font-bold drop-shadow-md">{farmersCount}</div>
               <div className="text-2xl font-medium drop-shadow-lg homestats-card-subtitle">
                 Local Farmers Supported
               </div>
             </div>
 
             <div className="homestats-card p-8 rounded-[40px] text-white text-center shadow-md w-full max-w-[500px]">
-              <div className="text-4xl font-bold drop-shadow-md">P 43, 325.00</div>
+              <div className="text-4xl font-bold drop-shadow-md">₱ {totalFunds}</div>
               <div className="text-2xl font-medium flex items-center justify-center gap-2 drop-shadow-lg homestats-card-subtitle">
                 <span>Funds Raised for Planting</span>
-                
                 <div className="group relative flex items-center justify-center cursor-pointer">
                   <Info className="w-5 h-5" />
-                  {/* tailwind tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-72 p-4 bg-white text-gray-800 text-sm text-black rounded-xl shadow-xl border border-gray-100 pointer-events-none
-                              opacity-0 translate-y-2 scale-95
-                              group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 
-                              transition-all duration-300 ease-out z-10">
-                    
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-72 p-4 bg-white text-gray-800 text-sm rounded-xl shadow-xl border border-gray-100 pointer-events-none
+                    opacity-0 translate-y-2 scale-95 group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100
+                    transition-all duration-300 ease-out z-10">
                     <p className="leading-relaxed text-center">
-                    Every peso contributes to reforestation. This total includes individual and corporate donations used to fund seed sourcing, tree nurturing, and long-term site maintenance across our target regions.
+                      Every peso contributes to reforestation. This total includes all confirmed
+                      donations used to fund seed sourcing, tree nurturing, and long-term site maintenance.
                     </p>
                   </div>
                 </div>

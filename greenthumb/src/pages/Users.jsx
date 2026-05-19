@@ -31,14 +31,20 @@ export default function Users() {
 
   // SAVE EDITED USER
   const handleSave = () => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user._id === editingUser._id ? editingUser : user
-      )
-    );
-    setEditingUser(null);
-  };
-
+  fetch(`http://localhost:5000/api/users/${editingUser._id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(editingUser),
+  })
+    .then((res) => res.json())
+    .then((updated) => {
+      setUsers((prev) =>
+        prev.map((u) => (u._id === updated._id ? updated : u))
+      );
+      setEditingUser(null);
+    })
+    .catch((err) => console.log(err));
+};
   // DATATABLE COLUMNS
   const columns = [
     {

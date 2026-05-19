@@ -1868,3 +1868,10 @@
   justify-content: center;
   gap: 8px;
 }
+
+
+.profile-modal,
+.edit-modal {
+  max-height: 80vh;
+  overflow-y: auto;
+}
