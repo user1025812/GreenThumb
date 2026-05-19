@@ -110,12 +110,12 @@ const TreeCard = ({ tree, onClick }) => (
     }}>
       {tree.stage}
     </span>
-    <p style={{ fontSize: "0.78rem", color: "#777", marginTop: "0.4rem", textAlign: "center" }}>
+    {/* <p style={{ fontSize: "0.78rem", color: "#777", marginTop: "0.4rem", textAlign: "center" }}>
       📍 {tree.location}
     </p>
     <p style={{ fontSize: "0.78rem", color: "#999", marginTop: "0.2rem", textAlign: "center" }}>
       Farmer: {tree.farmer}
-    </p>
+    </p> */}
   </div>
 );
 
@@ -251,6 +251,11 @@ const TreeTracker = () => {
       display: "flex", flexDirection: "column",
       alignItems: "center", padding: "2rem",
       marginTop: "3rem", marginBottom: "4rem",
+      backgroundImage: "url('/trackbgimg.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      minHeight: "100vh",
     }}>
       <h1 style={{ color: "#084C32", fontWeight: "700", marginBottom: "2rem", fontSize: "2.5rem" }}>
         Hello, {donorName}!
