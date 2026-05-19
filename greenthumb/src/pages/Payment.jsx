@@ -80,6 +80,18 @@ export default function Payment() {
     },
 
     {
+      name: "Status",
+      selector: (row) => row.datePaid,
+      sortable: true,
+      center: true,
+      cell: (row) => (
+        <span className={`status-badge ${row.datePaid === "Paid" ? "paid" : "pending"}`}>
+          {row.datePaid || "Pending"}
+        </span>
+      ),
+    },
+    
+    {
       name: "Action",
       center: true,
       cell: (row) => (

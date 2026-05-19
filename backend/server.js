@@ -31,18 +31,18 @@ app.post("/api/payments/webhook", express.raw({type: "application/json"}), async
 
     if (eventType === "payment.paid") {
       const paymentData = payload.data.attributes.data;
-      const amount = paymentData.attributes.amount;
+      // const amount = paymentData.attributes.amount;
       
       // PayMongo gives you the parent Payment Intent ID inside the webhook payload object
       const paymentIntentId = paymentData.attributes.payment_intent_id;
 
-      console.log(`💰 PayMongo Webhook: Payment of ₱${amount / 100} Succeeded. Intent ID: ${paymentIntentId}`);
+      console.log(`💰 PayMongo Webhook: Payment Succeeded. Intent ID: ${paymentIntentId}`);
 
       try {
         // 1. Update the parent payment transaction record from "pending" to "Paid"
         const updatedPayment = await Payment.findOneAndUpdate(
-          { paymentIntentId: paymentIntentId },
-          { status: "Paid" },
+          { transactionId: paymentIntentId }, 
+          { datePaid: "Paid" }, 
           { new: true }
         );
 
