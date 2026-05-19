@@ -17,8 +17,8 @@ function Hero() {
         <p className="text-xl font-light opacity-90 subtitle-home italic ">
           Join <span className="subtitle-span-home">Green Thumb</span> in restoring Philippine forests. We make reforestation easy, trustworthy, and accessible for everyone.
         </p>
-        <NavLink to="/plant" >        
-          <button className=" mt-3 text-white px-5 py-1.5 rounded-lg font-bold text-sm transition-all shadow-lg plant-home-btn">
+        <NavLink to="/join" >        
+          <button to="/join" className=" mt-3 text-white px-5 py-1.5 rounded-lg font-bold text-sm transition-all shadow-lg plant-home-btn">
             Plant a Tree Now
           </button>
         </NavLink>

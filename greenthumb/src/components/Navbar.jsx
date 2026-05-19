@@ -6,11 +6,14 @@ function Navbar() {
   return (
     <nav className="sticky top-0 left-0 right-0 bg-[#084c32] box-border z-50 flex items-center justify-between px-10 py-6 text-white text-sm font-medium">
         <div className="flex items-center">
-        <img 
-          src={longlogo} 
-          alt="GreenThumbs" 
-          className="h-14 w-auto object-contain -my-8 max-w-[150px]" 
-        />
+        
+        <NavLink to="/home">
+                <img 
+                    src={longlogo} 
+                    alt="GreenThumbs" 
+                    className="h-14 w-auto object-contain -my-8 max-w-[150px]" 
+                />
+            </NavLink>
       </div>
       <div className="hidden md:flex items-center gap-8 uppercase text-sm tracking-wide">
         <NavLink to="/home" className="hover:text-green-300">HOME</NavLink>

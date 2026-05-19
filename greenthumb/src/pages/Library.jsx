@@ -2,6 +2,7 @@ import TreeCard from "../components/library/TreeCard";
 import trees from "../components/library/treesData";
 // import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { NavLink } from "react-router-dom";
 
 function Library() {
   return (
@@ -16,7 +17,10 @@ function Library() {
           Learn about their unique characteristics, ecological 
           benefits, and how your donation helps secure their future.
         </p>
-        <button>Protect Our Forests</button>
+        
+        <NavLink to="/join" >        
+          <button to="/join">Protect Our Forests</button>
+        </NavLink>
       </div>
 
       <div className="trees-grid" style={{ marginBottom: '4rem' }}>
