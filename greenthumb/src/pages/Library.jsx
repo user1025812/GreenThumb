@@ -1,12 +1,12 @@
 import TreeCard from "../components/library/TreeCard";
 import trees from "../components/library/treesData";
-import Navbar from "../components/Navbar";
+// import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 function Library() {
   return (
     <div className="App min-h-screen bg-white font-sans text-gray-900" >
-      <Navbar />
+      {/* <Navbar /> */}
 
       <div className="header-section" style={{marginTop:"8rem"}}>
         <h1 style={{ marginBottom:"2rem"}}>Rooted in the Philippines</h1>

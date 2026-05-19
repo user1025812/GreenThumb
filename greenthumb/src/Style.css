@@ -179,7 +179,7 @@
 /* Container Layout */
 .page-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
@@ -307,6 +307,242 @@
     height: 3vh;
 }
 
+.welcome-banner {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center; 
+    gap: 1.5em; 
+    /* width: 100%; */
+    width: 50vw; 
+    background: linear-gradient(135deg, #084C32 0%, #0a5d3d 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px -5px rgba(8, 76, 50, 0.15);
+    margin-bottom: 2rem;
+    box-sizing: border-box;
+    border-top: 5px solid #EE9B00;
+}
+
+.welcome-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+    gap: 6px;
+}
+
+.welcome-banner h1 {
+    font-family: "Rethink Sans", sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.025em;
+    color: white;
+}
+
+.welcome-banner p {
+    font-family: "Rethink Sans", sans-serif;
+    font-size: 1rem;
+    margin: 0;
+    color: #a7f3d0; 
+    font-weight: 400;
+}
+
+/* User Account Badge Style */
+.user-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-family: "Rethink Sans", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #f59e0b; 
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981; 
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+}
+
+/* CSS Animation for the transition */
+.fade-in {
+    animation: slideDownFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Banner Checkout Button */
+.banner-checkout-btn {
+    font-family: "Rethink Sans", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #EE9B00; 
+    color: white;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(238, 155, 0, 0.3);
+    transition: all 0.2s ease-in-out;
+    width: fit-content; 
+}
+
+.banner-checkout-btn:hover {
+    background-color: #d48a00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(238, 155, 0, 0.4);
+}
+
+.banner-checkout-btn:active {
+    transform: translateY(0);
+}
+
+/* Counter bubble adjustment */
+.banner-badge {
+    background-color: white;
+    color: #EE9B00;
+    font-size: 0.8rem;
+    font-weight: 800;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 4px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* Full Screen Modal Background Blur Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px); /* Blurs out your grid behind the overlay card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Keeps it layered completely over your navbar menu */
+    animation: modalFadeIn 0.25s ease-out forwards;
+}
+
+/* Central Confirmation Pop Card */
+.success-modal-content {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    width: 90%;
+    max-width: 440px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    animation: modalPopUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Rounded Circular Check Badge Icon */
+.success-icon-badge {
+    background-color: #084C32;
+    color: white;
+    font-size: 1.75rem;
+    font-weight: bold;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 4px 12px rgba(8, 76, 50, 0.3);
+}
+
+.success-modal-content h2 {
+    font-family: "Rethink Sans", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e1e1e;
+    margin: 0;
+}
+
+.modal-message {
+    font-family: "Rethink Sans", sans-serif;
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.modal-message strong {
+    color: #084C32;
+    font-weight: 700;
+}
+
+.modal-close-action-btn {
+    font-family: "Rethink Sans", sans-serif;
+    background-color: #EE9B00;
+    color: white;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    width: fit-content;
+    margin-top: 1rem;
+    box-shadow: 0 4px 10px rgba(238, 155, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.modal-close-action-btn:hover {
+    background-color: #d48a00;
+    transform: translateY(-1px);
+}
+
+/* Animation Timelines */
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalPopUp {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
 /* Right Grid Section */
 .grid-wrapper {
     display: flex;
@@ -316,7 +552,8 @@
     border: 1px solid #e5e7eb;
     border-radius: 1.5rem;
     padding: 2vw;
-    width: 45vw;
+    margin-bottom: 0;
+    width: 50vw;
 }
 
 .grid-header {
@@ -345,18 +582,20 @@
 }
 
 .tree-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 /* Tree Card */
-.tree-card {
+.trees-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 9vw;
+    width: 10vw;
     background-color: white;
     border: 1px solid #f3f4f6;
     border-radius: 1rem;
@@ -366,12 +605,12 @@
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.tree-image {
-    width: 5vw;
-    height: 5vw;
+.trees-image {
+    width: 6vw;
+    height: 6vw;
 }
 
-.tree-name {
+.trees-name {
     font-family: "Rethink Sans";
     font-weight: 700;
     font-size: 1.15rem;
@@ -379,7 +618,7 @@
     margin-top: .5vw;
 }
 
-.tree-price {
+.trees-price {
     font-family: "Rethink Sans";
     font-size: 1.15rem;
     color: #f59e0b;
@@ -434,21 +673,21 @@
     pointer-events: none;
 }
 
-.tree-card:has(.quantity-selector.fade-in) {
+.trees-card:has(.quantity-selector.fade-in) {
     transform: scale(1.05);
     border-color: #EE9B00;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
     z-index: 10; 
 }
 
-.tree-card:has(.quantity-controls-wrapper) {
+.trees-card:has(.quantity-controls-wrapper) {
     transform: scale(1.05);
     border-color: #EE9B00;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
 
-.tree-card.selected-card {
+.trees-card.selected-card {
     transform: scale(1.02); 
     border: 2px solid #084C32 !important;
     background-color: #f0fdf4;

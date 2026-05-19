@@ -2,6 +2,7 @@ const trees = [
   {
     id: 1,
     name: "Dita",
+    price: 250,
     image: "/Dita.png",
     familyName: "Apocynaceae",
     conservationStatus: "Least Concern",
@@ -25,6 +26,7 @@ const trees = [
   {
     id: 2,
     name: "Araucaria",
+    price: 300,
     image: "/Araucaria.png",
     familyName: "Araucariaceae",
     conservationStatus: "Vulnerable",
@@ -51,6 +53,7 @@ const trees = [
   {
     id: 3,
     name: "Aunasin",
+    price: 150,
     image: "/Aunasin.jpg",
     familyName: "Primulaceae",
     conservationStatus: "Not Evaluated",
@@ -74,6 +77,7 @@ const trees = [
   {
     id: 4,
     name: "Neem Tree",
+    price: 180,
     image: "/NeemTree.jpg",
     familyName: "Meliaceae",
     conservationStatus: "Not Evaluated",
@@ -97,6 +101,7 @@ const trees = [
   {
     id: 5,
     name: "Botong",
+    price: 220,
     image: "/Botong.jpg",
     familyName: "Lecythidaceae",
     conservationStatus: "Least Concern",
@@ -120,6 +125,7 @@ const trees = [
   {
     id: 6,
     name: "Napoleon's Plume",
+    price: 200,
     image: "/Napoleon.jpg",
     familyName: "Fabaceae",
     conservationStatus: "Not Evaluated",
@@ -142,6 +148,7 @@ const trees = [
   {
     id: 7,
     name: "Bottle Brush Tree",
+    price: 200,
     image: "/BottleBrush.jpg",
     familyName: "Myrtaceae",
     conservationStatus: "Not Evaluated",
@@ -164,6 +171,7 @@ const trees = [
   {
     id: 8,
     name: "Bitaog",
+    price: 230,
     image: "/Bitaog.jpg",
     familyName: "Calophyllaceae",
     conservationStatus: "Least Concern",
@@ -186,6 +194,7 @@ const trees = [
   {
     id: 9,
     name: "Ylang-Ylang",
+    price: 300,
     image: "/YlangYlang.jpg",
     familyName: "Annonaceae",
     conservationStatus: "Least Concern",
@@ -208,6 +217,7 @@ const trees = [
   {
     id: 10,
     name: "Kalingag",
+    price: 170,
     image: "/Kalingag.jpg",
     familyName: "Lauraceae",
     conservationStatus: "Near Threatened",
@@ -230,6 +240,7 @@ const trees = [
   {
     id: 11,
     name: "Bagawak Morado",
+    price: 210,
     image: "/BagawakMorado.jpg",
     familyName: "Lamiaceae",
     conservationStatus: "Least Concern",
@@ -252,6 +263,7 @@ const trees = [
   {
     id: 12,
     name: "Salingbobog",
+    price: 350,
     image: "/Salingbobog.jpg",
     familyName: "Capparaceae",
     conservationStatus: "Least Concern",
@@ -274,6 +286,7 @@ const trees = [
   {
     id: 13,
     name: "Handkerchief Tree",
+    price: 170,
     image: "/HandkerchiefTree.jpg",
     familyName: "Fabaceae",
     conservationStatus: "Not Evaluated",
@@ -296,6 +309,7 @@ const trees = [
   {
     id: 14,
     name: "Katmon",
+    price: 400,
     image: "/Katmon.jpg",
     familyName: "Dilleniaceae",
     conservationStatus: "Near Threatened",
@@ -318,6 +332,7 @@ const trees = [
   {
     id: 15,
     name: "Rainbow Tree",
+    price: 320,
     image: "/RainbowTree.jpg",
     familyName: "Myrtaceae",
     conservationStatus: "Not Evaluated",

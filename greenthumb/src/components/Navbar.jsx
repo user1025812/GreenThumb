@@ -4,7 +4,7 @@ import '../App.css';
 import longlogo from "../assets/longlogo.png";
 function Navbar() {
   return (
-    <nav className="absolute top-0 left-0 right-0 box-border z-50 flex items-center justify-between px-10 py-6 text-white text-sm font-medium">
+    <nav className="sticky top-0 left-0 right-0 bg-[#084c32] box-border z-50 flex items-center justify-between px-10 py-6 text-white text-sm font-medium">
         <div className="flex items-center">
         <img 
           src={longlogo} 

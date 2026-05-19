@@ -6,7 +6,7 @@ function Hero() {
     <div className="relative h-[47vw] w-full flex items-center justify-end pr-20 overflow-hidden rounded-b-[50px]">
       <img 
         src={banner1}
-        className="absolute inset-0 w-full h-full object-cover banner1-img"
+        className="absolute inset-0 w-full h-full object-cover banner1-img mt-10"
         alt="banner1"
       />
       <div className="absolute inset-0 bg-black/20" />
