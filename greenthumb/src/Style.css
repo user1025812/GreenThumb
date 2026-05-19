@@ -344,10 +344,9 @@
 
 .welcome-banner p {
     font-family: "Rethink Sans", sans-serif;
-    font-size: 1rem;
-    margin: 0;
-    color: #a7f3d0; 
-    font-weight: 400;
+    font-size: 1.25rem;
+    margin-top: 1vw;
+    color: white; 
 }
 
 /* User Account Badge Style */

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../Style.css";
 import Navbar from "../components/DashboardNavbar";
 import { Search, Eye, Pencil, X } from "lucide-react";
+import DataTable from "react-data-table-component";
 import "../Dashboard.css";
 
 
