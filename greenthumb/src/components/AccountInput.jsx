@@ -54,7 +54,6 @@ const AccountInput = ({onJoin}) => {
             Plant a Tree Now <FaSeedling />
         </button>
         
-        <NavLink to="/dashboard" className="btn-primary">Admin</NavLink>
       </form>
 
       <div className="payment-icons">
@@ -63,6 +62,8 @@ const AccountInput = ({onJoin}) => {
         <img src="/gcash.png" alt="GCash" />
         <img src="/maya.png" alt="Maya" />
       </div>
+
+        <NavLink to="/dashboard" className="btn-primary">Admin</NavLink>
 
     </div>
   );

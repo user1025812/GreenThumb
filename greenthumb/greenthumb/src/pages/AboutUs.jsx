@@ -1,4 +1,4 @@
-// import Navbar from "../components/Navbar";
+import Navbar from "../../../src/components/Navbar";
 import Footer from "../components/Footer";
 import AboutSection from "../components/AboutSection";
 import InfoGrid, { InfoBlock } from "../components/InfoGrid";
@@ -11,7 +11,7 @@ import '../App.css'
 function AboutUs() {
   return (
     <div className="min-h-screen bg-white">
-      {/* <Navbar /> */}
+      <Navbar />
       <AboutSection />
       <InfoGrid>
         <InfoBlock 

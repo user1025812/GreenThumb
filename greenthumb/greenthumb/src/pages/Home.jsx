@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar';
+import Navbar from '../../../src/components/Navbar';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Purpose from '../components/Purpose'
@@ -16,7 +16,7 @@ import '../App.css'
 function Home() {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
-      {/* <Navbar /> */}
+      <Navbar />
       <Outlet />
       <Hero />
       <Purpose />

@@ -10,16 +10,16 @@ const TreeCard = ({ tree, quantity, onUpdateQuantity, onConfirm, isAdded }) => {
 
   return (
     <div 
-      className={`tree-card ${isSelecting ? 'selecting' : ''} ${isAdded ? 'selected-card' : ''}`}
+      className={`trees-card ${isSelecting ? 'selecting' : ''} ${isAdded ? 'selected-card' : ''}`}
     >
       <img 
         src={tree.image} 
         alt={tree.name} 
-        className={`tree-image w-20 h-20 transition-transform duration-500 ${isSelecting ? 'rotate-3' : ''}`} 
+        className={`trees-image w-20 h-20 transition-transform duration-500 ${isSelecting ? 'rotate-3' : ''}`} 
       />
       
-      <h4 className="tree-name font-bold text-lg mt-2 text-gray-900">{tree.name}</h4>
-      <p className="tree-price text-amber-500 font-semibold">P {tree.price.toFixed(2)}</p>
+      <h4 className="trees-name font-bold text-lg mt-2 text-gray-900">{tree.name}</h4>
+      <p className="trees-price text-amber-500 font-semibold">P {tree.price.toFixed(2)}</p>
 
       <div className="action-container">
         {/* State: Select */}

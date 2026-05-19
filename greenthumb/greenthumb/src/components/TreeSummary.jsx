@@ -35,6 +35,7 @@ const TreeSummary = ({ selectedTrees, isOpen, onClose }) => {
               <span className="total-price">P {totalCost.toFixed(2)}</span>
             </div>
             
+            <button className="checkout-btn">Proceed to Plant</button>
           </>
         )}
       </div>

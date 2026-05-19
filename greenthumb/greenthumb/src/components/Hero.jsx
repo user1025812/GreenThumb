@@ -6,7 +6,7 @@ function Hero() {
     <div className="relative h-[47vw] w-full flex items-center justify-end pr-20 overflow-hidden rounded-b-[50px]">
       <img 
         src={banner1}
-        className="absolute inset-0 w-full h-full object-cover banner1-img"
+        className="absolute inset-0 w-full h-full object-cover banner1-img mt-10"
         alt="banner1"
       />
       <div className="absolute inset-0 bg-black/20" />
@@ -18,7 +18,7 @@ function Hero() {
           Join <span className="subtitle-span-home">Green Thumb</span> in restoring Philippine forests. We make reforestation easy, trustworthy, and accessible for everyone.
         </p>
         <NavLink to="/plant" >        
-          <button to="/plantatree" className=" mt-3 text-white px-5 py-1.5 rounded-lg font-bold text-sm transition-all shadow-lg plant-home-btn">
+          <button className=" mt-3 text-white px-5 py-1.5 rounded-lg font-bold text-sm transition-all shadow-lg plant-home-btn">
             Plant a Tree Now
           </button>
         </NavLink>
