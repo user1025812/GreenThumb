@@ -56,14 +56,14 @@ const AccountInput = ({onJoin}) => {
         
       </form>
 
-      <div className="payment-icons">
+      {/* <div className="payment-icons">
         <img src="/visa.png" alt="Visa" />
         <img src="/mastercard.png" alt="Mastercard" />
         <img src="/gcash.png" alt="GCash" />
         <img src="/maya.png" alt="Maya" />
-      </div>
+      </div> */}
 
-        <NavLink to="/dashboard" className="btn-primary">Admin</NavLink>
+        {/* <NavLink to="/dashboard" className="btn-primary">Admin</NavLink> */}
 
     </div>
   );

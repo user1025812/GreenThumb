@@ -16,6 +16,7 @@ import Trees from "./pages/Trees";
 import Payment from "./pages/Payment";
 import Progress from "./pages/Progress";
 import Logout from "./pages/Logout";
+import AdminLogin from "./pages/AdminLogin";
 
 export const router = createBrowserRouter([
   {
@@ -62,12 +63,10 @@ export const router = createBrowserRouter([
       path: "/home",
       element: <Home />,
     },
-    {
-      path: "/dashboard",
-      element: <Dashboard />,
+               {
+      path: "/admin-login",
+      element: <AdminLogin />,
     },
-    
-
         {
           path:"/dashboard",
           element:<Dashboard />,

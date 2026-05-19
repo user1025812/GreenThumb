@@ -62,37 +62,11 @@ font-family: 'Rethink Sans', sans-serif;}
   color: white;
 }
 
-/*BELL + PROFILE*/
+/*PROFILE*/
 .dashboard-root .profile-wrapper {
   display: flex;
   align-items: center;
   gap: 14px;
-}
-
-/*BELL*/
-.dashboard-root .bell-wrapper {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  cursor: pointer;
-}
-
-.dashboard-root .bell-icon {
-  color: #222;
-}
-
-.dashboard-root .bell-dot {
-  width: 8px;
-  height: 8px;
-  background: #ff2b2b;
-  border-radius: 50%;
-  position: absolute;
-  top: 6px;
-  right: 7px;
 }
 
 /*PROFILE*/

@@ -9,6 +9,14 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [plantedCount, setPlantedCount] = useState(0);
     const [sessionKey, setSessionKey] = useState(0);
+    const [selectedRegion, setSelectedRegion] = useState('Luzon'); 
+    const [isProcessingPayment, setIsProcessingPayment] = useState(false); 
+
+    const targetHotspots = {
+        Luzon: "Sierra Madre (Quezon)",
+        Visayas: "Northern Negros Protected Area",
+        Mindanao: "Caraga Region (Agusan del Sur)"
+    };
 
     const handleJoin = (userData) => {
         setUser(userData);
@@ -16,26 +24,26 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
     };
 
     const totalItems = selectedTrees.reduce((sum, item) => sum + item.quantity, 0);
+    const totalOrderAmount = selectedTrees.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // Dynamic Database Submission Handler
     const handleCheckout = async () => {
         if (totalItems === 0) {
             alert("Your basket is empty! Please select some trees from the grid below first.");
             return;
         }
 
+        setIsProcessingPayment(true);
+
         try {
-            // 1. Save or Update User Profile via your backend User model
+            // 1. Create the database user entry first
             const userResponse = await fetch("http://localhost:5000/api/users", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     name: user.name,
                     email: user.email,
                     treesDonated: totalItems,
-                    joinedDate: new Date().toLocaleDateString()
+                    joinedDate: new Date() // Send an actual Date object (or new Date().toISOString())
                 }),
             });
 
@@ -43,24 +51,41 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
                 throw new Error("Failed to write donor user metadata to database.");
             }
 
-            // 2. Map and post each selected tree item to populate your Tree collection
-            // We use Promise.all to dispatch network streams in parallel safely
+            // 2. Call backend payment gateway endpoint
+            const paymentInitResponse = await fetch("http://localhost:5000/api/payments", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    amount: totalOrderAmount, 
+                    userId: user.email, 
+                    description: `Reforestation Donation for ${totalItems} trees in ${selectedRegion}`
+                })
+            });
+
+            if (!paymentInitResponse.ok) {
+                throw new Error("Failed to initialize transaction details with backend payment gateway.");
+            }
+
+            const paymentInitData = await paymentInitResponse.json();
+            const { clientKey, intentId } = paymentInitData;
+
+            // 3. Document individual tree logs in the Database (Marked as Pending)
             await Promise.all(
                 selectedTrees.map(async (tree) => {
                     const treeResponse = await fetch("http://localhost:5000/api/trees", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             donationId: `DN-${Math.floor(100000 + Math.random() * 900000)}`,
+                            paymentIntentId: intentId, 
                             name: user.name,
                             email: user.email,
-                            // Fallback check matching name/species mappings to your Mongoose schema
                             species: tree.name || tree.species || "Unknown Species", 
                             quantity: tree.quantity,
                             date: new Date().toLocaleDateString(),
-                            status: "Pending"
+                            location: selectedRegion, 
+                            specificSite: targetHotspots[selectedRegion], 
+                            status: "Pending" 
                         }),
                     });
 
@@ -70,13 +95,73 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
                 })
             );
 
-            // 3. Trigger victory modal display if responses resolve correctly
-            setPlantedCount(totalItems);
-            setShowSuccessModal(true);
+            // 4. Create the PayMongo Payment Method (GCash)
+            const PAYMONGO_PUBLIC_KEY = "pk_test_XchStmZaYhwLyozcFiBB2ihp"; 
+            const authHeader = `Basic ${btoa(PAYMONGO_PUBLIC_KEY + ':')}`;
+
+            const paymentMethodResponse = await fetch('https://api.paymongo.com/v1/payment_methods', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${btoa(PAYMONGO_PUBLIC_KEY + ':')}`
+                },
+                body: JSON.stringify({
+                    data: {
+                        attributes: {
+                            type: 'gcash' 
+                        }
+                    }
+                })
+            });
+
+            const paymentMethodData = await paymentMethodResponse.json();
+            
+            if (!paymentMethodResponse.ok || !paymentMethodData.data) {
+                throw new Error(paymentMethodData.errors?.[0]?.detail || "Failed to establish GCash payment method token.");
+            }
+
+            const paymentMethodId = paymentMethodData.data.id;
+
+            // 5. Attach Payment Method directly to your created Payment Intent
+            const cleanIntentId = clientKey.split('_client_')[0];
+            const attachResponse = await fetch(`https://api.paymongo.com/v1/payment_intents/${cleanIntentId}/attach`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': authHeader
+                },
+                body: JSON.stringify({
+                    data: {
+                        attributes: {
+                            client_key: clientKey,
+                            payment_method: paymentMethodId,
+                            return_url: window.location.origin + "/progress"
+                        }
+                    }
+                })
+            });
+
+            const attachData = await attachResponse.json();
+          
+            if (!attachResponse.ok || !attachData.data) {
+                throw new Error(attachData.errors?.[0]?.detail || "Gateway attachment validation rejected.");
+            }
+
+            const attachAttributes = attachData.data.attributes;
+
+            // 6. Handle Route Interception based on gateway criteria
+            if (attachAttributes.status === 'awaiting_next_action') {
+                window.location.href = attachAttributes.next_action.redirect.url;
+            } else if (attachAttributes.status === 'succeeded') {
+                setPlantedCount(totalItems);
+                setShowSuccessModal(true);
+            }
 
         } catch (error) {
-            console.error("Database connection failure context details:", error);
-            alert("Oops! There was a problem reaching the backend data server. Please try again.");
+            console.error("Payment routing system failure:", error);
+            alert("Oops! There was a problem reaching the backend payment data server. Please try again.");
+        } finally {
+            setIsProcessingPayment(false);
         }
     };
 
@@ -86,10 +171,11 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
         setIsJoined(false);
         setShowSuccessModal(false);
         setSessionKey(prev => prev + 1);
+        setSelectedRegion('Luzon'); 
     };
 
     return (
-        <div className="page-container">
+        <div className="page-container" style={{ paddingBottom: isJoined ? '140px' : '0px' }}>
             {!isJoined && (
                 <div className="login-stage-wrapper">
                     <AccountInput onJoin={handleJoin} />
@@ -101,18 +187,30 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
                 selectedTrees={selectedTrees} 
                 setSelectedTrees={setSelectedTrees} 
                 canInteract={isJoined} 
+                selectedRegion={selectedRegion}
+                setSelectedRegion={setSelectedRegion}
             />
 
+            {/* Original PayMongo Banner Structure — Retaining all text fields and markup */}
             {isJoined && (
-                <div className="welcome-banner fade-in">
+                <div className="welcome-banner fade-in unified-sticky-footer">
                     <div className="welcome-text-group">
                         <h1>Happy Planting, {user.name}!</h1>
-                        <p>Logged in as: {user.email}</p>
+                        <p>Basket Total: <strong>P {totalOrderAmount.toFixed(2)}</strong> ({totalItems} trees)</p>
                     </div>
-                    <button className="banner-checkout-btn" onClick={handleCheckout}>
-                        Confirm & Plant Trees
-                        {totalItems > 0 && <span className="banner-badge">{totalItems}</span>}
-                    </button>
+                    
+                    <div className="checkout-action-group">
+                        <button 
+                            className="btn-primary" 
+                            onClick={handleCheckout} 
+                            disabled={isProcessingPayment}
+                        >
+                            {isProcessingPayment ? "Processing GCash Securely..." : "Confirm & Plant Now"}
+                            {totalItems > 0 && !isProcessingPayment && (
+                                <span className="banner-badge">{totalItems}</span>
+                            )}
+                        </button>
+                    </div>
                 </div>
             )}
 
@@ -122,7 +220,7 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
                         <div className="success-icon-badge">✓</div>
                         <h2>Planting Confirmed!</h2>
                         <p className="modal-message">
-                            Thank you for your donation, <strong>{user.name}</strong>! You have successfully contributed <strong>{plantedCount} tree(s)</strong> to our green project environment.
+                            Thank you for your donation, <strong>{user.name}</strong>! You have successfully contributed <strong>{plantedCount} tree(s)</strong> targeted for reforestation in <strong>{targetHotspots[selectedRegion]}</strong>.
                         </p>
                         <button className="modal-close-action-btn" onClick={handleCloseModal}>
                             Close

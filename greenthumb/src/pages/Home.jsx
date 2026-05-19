@@ -1,4 +1,4 @@
-import Navbar from '../components/Navbar';
+// import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Purpose from '../components/Purpose'
@@ -28,8 +28,8 @@ function Home() {
           imgSrc= {iconCommunity}
         />
         <InfoBlock 
-          title= "Native Species Only" 
-          description= "We local native trees." 
+          title= "Trees planted" 
+          description= "We plant for reforestation." 
           imgSrc= {iconNative}
         />
         <InfoBlock 
