@@ -135,7 +135,7 @@ const Join = ({ selectedTrees = [], setSelectedTrees }) => {
                         attributes: {
                             client_key: clientKey,
                             payment_method: paymentMethodId,
-                            return_url: window.location.origin + "/progress"
+                            return_url: window.location.origin + "/progresspage"
                         }
                     }
                 })

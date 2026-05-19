@@ -56,12 +56,14 @@ router.post("/", async (req, res) => {
 
     // 4. Create local DB log entry safely handling optional treeId variations
     const newPayment = new Payment({
-      userId: userId,
-      treeId: treeId || null,
-      amount: pesoAmount,            
-      paymentIntentId: intentId,     
-      status: "pending",
-      description: description || "Tree Contribution Transaction",
+      transactionId: intentId,       
+      donationId: `DN-${Math.floor(100000 + Math.random() * 900000)}`,
+      donor: userId,                   
+      amount: pesoAmount.toFixed(2),    
+      method: "GCash",                  
+      reference: intentId,              
+      tree: treeId || "Multiple Species",
+      datePaid: "Pending"              
     });
 
     const savedPayment = await newPayment.save();
