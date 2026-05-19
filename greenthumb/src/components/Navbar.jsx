@@ -4,9 +4,8 @@ import '../App.css';
 import longlogo from "../assets/longlogo.png";
 function Navbar() {
   return (
-    <nav className="sticky top-0 left-0 right-0 bg-[#084c32] box-border z-50 flex items-center justify-between px-10 py-6 text-white text-sm font-medium">
+    <nav className="absolute top-0 left-0 right-0 box-border z-50 flex items-center justify-between px-10 py-6 text-white text-sm font-medium">
         <div className="flex items-center">
-        
         <NavLink to="/home">
                 <img 
                     src={longlogo} 
@@ -46,7 +45,7 @@ function Navbar() {
         <NavLink to="/aboutus" className="hover:text-green-300">ABOUT US</NavLink>
         <NavLink to="/plant" className="hover:text-green-300">PLANT A TREE</NavLink>
         <NavLink to="/library" className="hover:text-green-300">GREEN LIBRARY</NavLink>
-        <NavLink to="/progress" className="hover:text-green-300">PROGRESS</NavLink>
+        <NavLink to="/progresspage" className="hover:text-green-300">PROGRESS</NavLink>
         <NavLink to="/faqs" className="hover:text-green-300">FAQs</NavLink>
       </el-disclosure>
     </nav>

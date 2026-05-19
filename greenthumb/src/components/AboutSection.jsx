@@ -20,7 +20,7 @@ const aboutContent = {
 
 function AboutSection({ props = aboutContent }) {
   return (
-    <div className="relative max-w-7xl mx-auto px-5 py-20 mt-16 font-sans">
+    <div className="relative max-w-7xl mx-auto px-5 pb-20 pt-10 mt-10 font-sans">
       <div className="flex flex-col lg:flex-row items-start">
         
         <div className="w-full lg:w-[58%] relative">
