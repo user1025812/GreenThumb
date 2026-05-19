@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ArrowButton from "./ArrowButton";
-
+//ai was use to assist in creating the code for the carousel logic
 function BiodiversityCarousel({ images = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 

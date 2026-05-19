@@ -28,8 +28,8 @@ function Home() {
           imgSrc= {iconCommunity}
         />
         <InfoBlock 
-          title= "Native Species Only" 
-          description= "We local native trees." 
+          title= "Trees planted" 
+          description= "We plant for reforestation." 
           imgSrc= {iconNative}
         />
         <InfoBlock 
