@@ -14,32 +14,31 @@ router.get("/", async (req, res) => {
   }
 });
 
-// CREATE / UPDATE USER (Refactored to handle returning donors cleanly)
+// CREATE / UPDATE USER
 router.post("/", async (req, res) => {
   try {
+    console.log("Received body:", req.body);
     const { name, email, treesDonated, joinedDate } = req.body;
 
     if (!email) {
       return res.status(400).json({ message: "Email is required." });
     }
 
-    // findOneAndUpdate searches for the email. 
-    // If it exists, it updates it. If it doesn't, 'upsert: true' creates a new record!
     const savedUser = await User.findOneAndUpdate(
-      { email: email.toLowerCase().trim() }, // Search criteria
-      { 
-        $set: { 
+      { email: email.toLowerCase().trim() },
+      {
+        $set: {
           name: name,
           joinedDate: joinedDate || new Date().toLocaleDateString()
-        }, 
-        $inc: { 
-          treesDonated: treesDonated || 0 // $inc increments the number instead of overwriting it!
+        },
+        $inc: {
+          treesDonated: treesDonated || 0
         }
       },
-      { 
-        new: true,       // Returns the updated/newly created document
-        upsert: true,    // Instantly creates it if it doesn't exist
-        runValidators: true 
+      {
+        new: true,
+        upsert: true,
+        runValidators: true
       }
     );
 

@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
 /* ADD PAYMENT / INITIALIZE INTENT */
 router.post("/", async (req, res) => {
   try {
+    console.log("Payment request received:", req.body); // ADD THIS
     const { amount, userId, treeId, description } = req.body;
 
     // 1. Check if amount exists and is a valid number

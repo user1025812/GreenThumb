@@ -1,13 +1,12 @@
 import "../Dashboard.css";
 import Navbar from "../components/DashboardNavbar";
-import { Trees, Users, Sprout, PhilippinePeso, } from "lucide-react";
+import { Trees, Users, Sprout, PhilippinePeso } from "lucide-react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, 
-    PieChart, Pie, Cell, Legend,  CartesianGrid, } from "recharts";
+    PieChart, Pie, Cell, Legend, CartesianGrid } from "recharts";
 import DataTable from "react-data-table-component";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-/* CHART COLORS */
 const COLORS = [
   "#7384ff",
   "#f26da9",
@@ -21,7 +20,6 @@ const COLORS = [
 
 export default function Dashboard() {
 
-  /* DASHBOARD STATS */
   const [stats, setStats] = useState({
     totalTrees: 0,
     activeUsers: 0,
@@ -29,49 +27,39 @@ export default function Dashboard() {
     totalDonations: 0,
   });
 
-  /* DASHBOARD DATA */
   const [dashboardData, setDashboardData] = useState({
     latestDonations: [],
     treePopularity: [],
     contributionData: [],
   });
 
-  useEffect(() => {
-    fetchDashboardStats();
-    fetchDashboardData();
-  }, []);
-
-  /* FETCH DASHBOARD STATS */
   const fetchDashboardStats = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/dashboard/stats"
-      );
+      const response = await axios.get("http://localhost:5000/api/dashboard/stats");
       setStats(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-  /* FETCH DASHBOARD DATA */
+
   const fetchDashboardData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/api/dashboard/dashboard-data"
-      );
+      const response = await axios.get("http://localhost:5000/api/dashboard/dashboard-data");
       setDashboardData({
-        latestDonations:
-          response.data.latestDonations || [],
-        treePopularity:
-          response.data.treePopularity || [],
-        contributionData:
-          response.data.contributionData || [],
+        latestDonations: response.data.latestDonations || [],
+        treePopularity: response.data.treePopularity || [],
+        contributionData: response.data.contributionData || [],
       });
     } catch (error) {
       console.log(error);
     }
   };
 
-  /* DATATABLE */
+  useEffect(() => {
+    fetchDashboardStats();
+    fetchDashboardData();
+  }, []);
+
   const donationColumns = [
     {
       name: "Donor Name",
@@ -79,78 +67,61 @@ export default function Dashboard() {
       sortable: true,
       center: true,
     },
-
     {
       name: "Tree Type",
       selector: (row) => row.tree || "N/A",
       sortable: true,
       center: true,
     },
-
     {
       name: "Amount",
       selector: (row) => row.amount || "N/A",
       sortable: true,
       center: true,
     },
-
     {
       name: "Date",
       selector: (row) => row.datePaid || "N/A",
       sortable: true,
       center: true,
-    }, 
+    },
   ];
 
   return (
     <div className="dashboard-root users-page">
-      {/* NAVBAR */}
       <Navbar />
       <div className="users-wrapper">
-        {/* HEADER */}
         <div className="users-header">
-          <h1 className="users-heading">
-            Dashboard
-          </h1>
+          <h1 className="users-heading">Dashboard</h1>
         </div>
         <div className="dashboard-cards">
-          {/* TOTAL TREES PLANTED*/}
           <div className="dashboard-card">
             <div>
               <h3>Total Trees Planted</h3>
-              <h1>
-                {stats.totalTrees}
-              </h1>
+              <h1>{stats.totalTrees}</h1>
             </div>
             <div className="dashboard-icon">
               <Trees size={24} />
             </div>
           </div>
-          {/* ACTIVE USERS */}
           <div className="dashboard-card">
             <div>
               <h3>Active Users</h3>
-              <h1>
-                {stats.activeUsers}
-              </h1>
+              <h1>{stats.activeUsers}</h1>
             </div>
             <div className="dashboard-icon">
               <Users size={24} />
             </div>
           </div>
-          {/* PENDING PLANTINGS */}
           <div className="dashboard-card">
             <div>
               <h3>Pending Plantings</h3>
-              <h1>
-                {stats.pendingPlantings}
-              </h1>
+              <h1>{stats.pendingPlantings}</h1>
             </div>
             <div className="dashboard-icon">
               <Sprout size={24} />
             </div>
           </div>
-          {/* TOTAL DONATIONS */}
           <div className="dashboard-card donation-highlight">
             <div>
               <h3>Total Donations</h3>
@@ -165,63 +136,40 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        {/* CHARTS */}
         <div className="dashboard-charts">
-          {/* LINE CHART */}
           <div className="chart-box">
-            <h2>
-              Contribution Insights
-            </h2>
-            <ResponsiveContainer
-              width="100%"
-              height={300}
-            >
-              <LineChart
-                data={dashboardData.contributionData}
-              >
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                />
+            <h2>Contribution Insights</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={dashboardData.contributionData}>
+                <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                {dashboardData.treePopularity.map(
-                  (treeItem, index) => (
-                    <Line
-                      key={index}
-                      type="monotone"
-                      dataKey={String(treeItem._id).trim()}
-                      name={String(treeItem._id).trim()}
-                      stroke={
-                        COLORS[index % COLORS.length]
-                      }
-                      strokeWidth={3}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                  )
-                )}
+                {dashboardData.treePopularity.map((treeItem, index) => (
+                  <Line
+                    key={index}
+                    type="monotone"
+                    dataKey={String(treeItem._id).trim()}
+                    name={String(treeItem._id).trim()}
+                    stroke={COLORS[index % COLORS.length]}
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                ))}
               </LineChart>
             </ResponsiveContainer>
           </div>
-          {/* PIE CHART */}
           <div className="chart-box">
-            <h2>
-              Tree Popularity
-            </h2>
-            <ResponsiveContainer
-              width="100%"
-              height={300}
-            >
+            <h2>Tree Popularity</h2>
+            <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={dashboardData.treePopularity.map(
-                    (item) => ({
-                      name: String(item._id).trim(),
-                      value: item.value,
-                    })
-                  )}
+                  data={dashboardData.treePopularity.map((item) => ({
+                    name: String(item._id).trim(),
+                    value: item.value,
+                  }))}
                   dataKey="value"
                   nameKey="name"
                   cx="50%"
@@ -230,16 +178,9 @@ export default function Dashboard() {
                   outerRadius={100}
                   label
                 >
-                  {dashboardData.treePopularity.map(
-                    (entry, index) => (
-                      <Cell
-                        key={index}
-                        fill={
-                          COLORS[index % COLORS.length]
-                        }
-                      />
-                    )
-                  )}
+                  {dashboardData.treePopularity.map((entry, index) => (
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                  ))}
                 </Pie>
                 <Tooltip />
                 <Legend />
@@ -247,12 +188,8 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         </div>
-        {/* LATEST DONATION */}
         <div className="donation-table-box">
-          <h2>
-            Latest Donations
-          </h2>
-          {/* DATA TABLE */}
+          <h2>Latest Donations</h2>
           <DataTable
             columns={donationColumns}
             data={dashboardData.latestDonations}
