@@ -22,6 +22,8 @@ import {
   CartesianGrid,
 } from "recharts";
 
+import DataTable from "react-data-table-component";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -106,6 +108,37 @@ export default function Dashboard() {
     }
 
   };
+
+  /* DATATABLE COLUMNS */
+  const donationColumns = [
+    {
+      name: "Donor Name",
+      selector: (row) => row.donor || "N/A",
+      sortable: true,
+      center: true,
+    },
+
+    {
+      name: "Tree Type",
+      selector: (row) => row.tree || "N/A",
+      sortable: true,
+      center: true,
+    },
+
+    {
+      name: "Amount",
+      selector: (row) => row.amount || "N/A",
+      sortable: true,
+      center: true,
+    },
+
+    {
+      name: "Date",
+      selector: (row) => row.datePaid || "N/A",
+      sortable: true,
+      center: true,
+    }, 
+  ];
 
   return (
 
@@ -199,7 +232,9 @@ export default function Dashboard() {
               <h3>Total Donations</h3>
 
               <h1>
-                ₱ {stats.totalDonations}
+                {stats.totalDonations === "N/A"
+                  ? "N/A"
+                  : `₱ ${stats.totalDonations}`}
               </h1>
 
             </div>
@@ -321,96 +356,22 @@ export default function Dashboard() {
 
         </div>
 
-        {/* DONATION TABLE */}
+        {/* DONATION DATATABLE */}
         <div className="donation-table-box">
 
           <h2>
             Latest Donations
           </h2>
 
-          <table>
-
-            <thead>
-
-              <tr>
-
-                <th>
-                  Donor Name
-                </th>
-
-                <th>
-                  Tree Type
-                </th>
-
-                <th>
-                  Amount
-                </th>
-
-                <th>
-                  Date
-                </th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {dashboardData.latestDonations.length > 0 ? (
-
-                dashboardData.latestDonations.map(
-                  (item, index) => (
-
-                    <tr key={index}>
-
-                      <td>
-                        {item.name || "N/A"}
-                      </td>
-
-                      <td>
-                        {item.tree || "N/A"}
-                      </td>
-
-                      <td>
-                        {item.amount
-                          ? `₱ ${item.amount}`
-                          : "N/A"}
-                      </td>
-
-                      <td>
-                        {item.createdAt
-                          ? new Date(
-                              item.createdAt
-                            ).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-
-                    </tr>
-
-                  )
-                )
-
-              ) : (
-
-                <tr>
-
-                  <td
-                    colSpan="4"
-                    style={{
-                      textAlign: "center",
-                      padding: "20px",
-                    }}
-                  >
-                    No donations yet
-                  </td>
-
-                </tr>
-
-              )}
-
-            </tbody>
-
-          </table>
+          <DataTable
+            columns={donationColumns}
+            data={dashboardData.latestDonations}
+            pagination
+            highlightOnHover
+            responsive
+            striped
+            noDataComponent="No donations yet"
+          />
 
         </div>
 
