@@ -45,7 +45,6 @@ router.post("/", async (req, res) => {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          // Base64 encoding authorization setup fallback verification
           "Authorization": `Basic ${Buffer.from(process.env.PAYMONGO_SECRET_KEY + ":").toString("base64")}`,
         },
       }
@@ -57,7 +56,7 @@ router.post("/", async (req, res) => {
     // 4. Create local DB log entry safely handling optional treeId variations
     const newPayment = new Payment({
       userId: userId,
-      treeId: treeId || null, // Fallback safely if frontend sends multiple items instead of one
+      treeId: treeId || null,
       amount: pesoAmount,            
       paymentIntentId: intentId,     
       status: "pending",
@@ -71,11 +70,11 @@ router.post("/", async (req, res) => {
       success: true,
       payment: savedPayment,
       clientKey: clientKey, 
-      intentId: intentId // CRITICAL: Frontend needs this matching token reference
+      intentId: intentId 
     });
 
   } catch (error) {
-    // This logs the exact error reason from PayMongo directly into your terminal!
+    // This logs the exact error reason from PayMongo directly into your terminal
     console.error("================ PAYMONGO REJECTION DETAILS ================");
     console.error(error.response?.data || error.message);
     console.error("==========================================================");

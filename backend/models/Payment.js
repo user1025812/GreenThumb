@@ -25,9 +25,18 @@ const paymentSchema = new mongoose.Schema({
     type: String,
   },
 
-  date: {
+  tree: {
     type: String,
   },
+
+  datePaid: {
+    type: String,
+  },
+
 });
 
-module.exports = mongoose.model("Payment", paymentSchema);
+module.exports =
+  mongoose.model(
+    "Payment",
+    paymentSchema
+  );
