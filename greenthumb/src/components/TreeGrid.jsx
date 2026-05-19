@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TreeCard from './TreeCard';
 import TreeSummary from './TreeSummary';
 import { HiOutlineShoppingCart } from "react-icons/hi2";
 import trees from '../components/library/treesData';
 import "../Style.css";
 
-const TreeGrid = ({ selectedTrees = [], setSelectedTrees, canInteract }) => {
+const TreeGrid = ({ selectedTrees = [], setSelectedTrees, canInteract, selectedRegion, setSelectedRegion }) => {
   const [pendingQuantities, setPendingQuantities] = useState({});
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
+  
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Update temp quantity before user hits "Add"
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const updatePending = (treeId, qty) => {
     setPendingQuantities(prev => ({ ...prev, [treeId]: Math.max(0, qty) }));
-    
-    // If user reduces to 0, remove it from the actual selection too
     if (qty === 0) {
       setSelectedTrees(prev => prev.filter(item => item.id !== treeId));
     }
   };
 
-  // Confirm and move to the global selectedTrees state
   const confirmAdd = (tree) => {
     const qty = pendingQuantities[tree.id] || 1;
     setSelectedTrees(prev => {
@@ -28,14 +37,20 @@ const TreeGrid = ({ selectedTrees = [], setSelectedTrees, canInteract }) => {
     });
   };
 
-  // Badge count (total trees selected)
   const totalItems = selectedTrees.reduce((sum, item) => sum + item.quantity, 0);
+
+  const regionOptions = [
+    { value: 'Luzon', label: 'Luzon — Sierra Madre' },
+    { value: 'Visayas', label: 'Visayas — Negros Forest' },
+    { value: 'Mindanao', label: 'Mindanao — Caraga Mining Area' }
+  ];
+
+  const currentSelectionLabel = regionOptions.find(opt => opt.value === selectedRegion)?.label || '';
 
   return (
     <div className="grid-wrapper"> 
       <div className="grid-header">
         <div className="header-spacer"></div>
-
         <h2 className="grid-title">Choose Your Tree</h2>
 
         <button className="cart-button" onClick={() => setIsSummaryOpen(true)}>
@@ -45,6 +60,7 @@ const TreeGrid = ({ selectedTrees = [], setSelectedTrees, canInteract }) => {
         </button>
       </div>
       
+      {/* Tree Grid Layout */}
       <div className={`tree-grid ${!canInteract ? 'grid-disabled' : ''}`}> 
         {trees.map((tree) => (
           <TreeCard 
@@ -60,6 +76,45 @@ const TreeGrid = ({ selectedTrees = [], setSelectedTrees, canInteract }) => {
             onConfirm={() => confirmAdd(tree)}
           />
         ))}
+      </div>
+
+      <div className="grid-footer-dropdown">
+        <div className={`dropdown-container ${!canInteract ? 'disabled-wrapper' : ''}`} ref={dropdownRef}>
+          <label className="dropdown-label">
+            Choose Target Reforestation Site
+          </label>
+          
+          <div 
+            className={`custom-select-trigger ${isDropdownOpen ? 'open' : ''} ${!canInteract ? 'disabled' : ''}`}
+            onClick={() => {
+              if(!canInteract) {
+                alert("Please enter your details above first!");
+                return;
+              }
+              setIsDropdownOpen(!isDropdownOpen);
+            }}
+          >
+            <span>{currentSelectionLabel}</span>
+            <span className="custom-arrow"></span>
+          </div>
+
+          {isDropdownOpen && canInteract && (
+            <ul className="custom-options-menu">
+              {regionOptions.map((option) => (
+                <li 
+                  key={option.value}
+                  className={`custom-option-item ${selectedRegion === option.value ? 'selected' : ''}`}
+                  onClick={() => {
+                    setSelectedRegion(option.value);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  {option.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
 
       <TreeSummary 

@@ -1,78 +1,159 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import '../TreeMap.css';
 
-// used ai to look for a map api and create the code
+// Fix missing asset path assignments for default Leaflet marker icons
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
-const trees = [
-  { id: 1, lat: 14.5995, lng: 120.9842, species: "Narra", date: "2025-01-15", status: "Growing" },
-  { id: 2, lat: 14.6100, lng: 121.0100, species: "Molave", date: "2025-03-02", status: "Survived" },
-  { id: 3, lat: 14.5800, lng: 120.9700, species: "Mahogany", date: "2025-04-20", status: "Needs Care" },
-];
-
-const STATUS_COLORS = {
-  "Survived": "#084C32",
-  "Growing": "#4CAF50",
-  "Needs Care": "#ee9b00",
+const regionConfigs = {
+  Luzon: {
+    coords: [15.1424, 121.5756],
+    siteName: "Sierra Madre (Quezon Province)",
+    description: "Combating illegal logging and infrastructure encroachment in the longest mountain range in the Philippines."
+  },
+  Visayas: {
+    coords: [10.6653, 123.1672],
+    siteName: "Northern Negros Natural Park",
+    description: "Restoring critical lowland rain forest habitats degraded by historical agricultural expansion."
+  },
+  Mindanao: {
+    coords: [8.4823, 125.8643],
+    siteName: "Caraga Region (Agusan del Sur)",
+    description: "Rehabilitating land ecosystems severely disrupted by aggressive open-pit mining operations."
+  }
 };
 
-// custom tree marker per status color
-const getTreeIcon = (status) =>
-  L.divIcon({
-    className: "",
-    html: `<div style="
-      background:${STATUS_COLORS[status] ?? "#084C32"};
-      width:32px; height:32px;
-      border-radius:50% 50% 50% 0;
-      transform:rotate(-45deg);
-      border:2px solid white;
-      box-shadow:0 2px 6px rgba(0,0,0,0.3);
-    "></div>`,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -35],
-  });
-
 const TreeMap = () => {
-  return (
-    <div style={{ width: "100%", height: "500px", borderRadius: "16px", overflow: "hidden" }}>
-      <MapContainer
-        center={[14.5995, 120.9842]}
-        zoom={13}
-        style={{ width: "100%", height: "100%" }}
-      >
-        {/* Satellite tiles — free, no API key */}
-        <TileLayer
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          attribution="Tiles &copy; Esri"
-        />
+  const [aggregatedData, setAggregatedData] = useState({
+    Luzon: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() },
+    Visayas: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() },
+    Mindanao: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() }
+  });
+  const [loading, setLoading] = useState(true);
 
-        {trees.map((tree) => (
-          <Marker key={tree.id} position={[tree.lat, tree.lng]} icon={getTreeIcon(tree.status)}>
-            <Popup>
-              <div style={{ fontFamily: "sans-serif", minWidth: "140px" }}>
-                <p style={{ fontWeight: "700", fontSize: "14px", color: "#084C32", marginBottom: "6px" }}>
-                  🌳 {tree.species}
-                </p>
-                <p style={{ fontSize: "12px", color: "#555", margin: "3px 0" }}>
-                  📅 {tree.date}
-                </p>
-                <p style={{ fontSize: "12px", margin: "3px 0" }}>
-                  <span style={{
-                    background: STATUS_COLORS[tree.status],
-                    color: "white",
-                    borderRadius: "999px",
-                    padding: "2px 10px",
-                    fontSize: "11px",
-                  }}>
-                    {tree.status}
-                  </span>
-                </p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+  useEffect(() => {
+    fetch("http://localhost:5000/api/trees")
+      .then(res => res.json())
+      .then(dbTrees => {
+        const summary = {
+          Luzon: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() },
+          Visayas: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() },
+          Mindanao: { totalTrees: 0, speciesList: new Set(), donorsCount: new Set() }
+        };
+
+        dbTrees.forEach(item => {
+          if (summary[item.location]) {
+            summary[item.location].totalTrees += item.quantity;
+            if (item.species) summary[item.location].speciesList.add(item.species);
+            if (item.email) summary[item.location].donorsCount.add(item.email);
+          }
+        });
+
+        setAggregatedData(summary);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Progress tracker map sync failure:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="map-loading-screen">
+        <div className="spinner"></div>
+        <p>Updating National Progress Metrics...</p>
+      </div>
+    );
+  }
+
+  const grandTotal = aggregatedData.Luzon.totalTrees + aggregatedData.Visayas.totalTrees + aggregatedData.Mindanao.totalTrees;
+
+  return (
+    <div className="progress-map-container">
+      
+      {/* Floating Modern Dashboard Overlay */}
+      <div className="stats-dashboard-banner">
+        <div className="stats-main-info">
+          <h3>{grandTotal.toLocaleString()} Trees</h3>
+          <p>Total Contributions Visualized Across National Hotspots</p>
+        </div>
+        
+        <div className="regional-breakdown-group">
+          <div className="region-stat-node">
+            <span className="region-label">Luzon</span>
+            <span className="region-count">{aggregatedData.Luzon.totalTrees}</span>
+          </div>
+          <div className="region-stat-node">
+            <span className="region-label">Visayas</span>
+            <span className="region-count">{aggregatedData.Visayas.totalTrees}</span>
+          </div>
+          <div className="region-stat-node">
+            <span className="region-label">Mindanao</span>
+            <span className="region-count">{aggregatedData.Mindanao.totalTrees}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Full Width Map Base Frame */}
+      <div className="map-frame">
+        <MapContainer center={[12.2000, 122.4000]} zoom={5.5} zoomControl={false}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          />
+
+          {Object.keys(regionConfigs).map((regionKey) => {
+            const config = regionConfigs[regionKey];
+            const metrics = aggregatedData[regionKey];
+
+            return (
+              <Marker key={regionKey} position={config.coords}>
+                <Popup className="modern-popup"
+                  autoPan={true}
+                  autoPanPadding={L.point(20, 150)}
+                  >
+                  <div className="popup-card-content">
+                    <h3>{regionKey} Hub</h3>
+                    <p className="popup-site-subtitle">{config.siteName}</p>
+                    
+                    <div className="popup-metrics-grid">
+                      <div className="metric-row">
+                        <strong>Total Planted:</strong> 
+                        <span className="highlight-text">{metrics.totalTrees} units</span>
+                      </div>
+                      <div className="metric-row">
+                        <strong>Unique Supporters:</strong> 
+                        <span>{metrics.donorsCount.size} donors</span>
+                      </div>
+                      <div className="metric-row">
+                        <strong>Species Count:</strong> 
+                        <span>{metrics.speciesList.size} types</span>
+                      </div>
+                    </div>
+
+                    <p className="popup-site-desc">{config.description}</p>
+                    
+                    {metrics.speciesList.size > 0 && (
+                      <div className="popup-active-species">
+                        <strong>Active:</strong> {Array.from(metrics.speciesList).join(', ')}
+                      </div>
+                    )}
+                  </div>
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MapContainer>
+      </div>
+
     </div>
   );
 };

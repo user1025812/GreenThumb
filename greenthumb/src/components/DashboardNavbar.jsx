@@ -14,12 +14,10 @@ export default function Navbar() {
   name: storedUser?.name || "Admin",
   username: storedUser?.username || "@admin",
 };
-
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/logout");
   };
-
   return (
     <div className="dashboard-navbar">
       {/*LOGO*/}
@@ -32,7 +30,6 @@ export default function Navbar() {
         />
     </NavLink>
 </div>
-
       {/*NAVIGATION*/}
       <div className="nav-links">
         <NavLink
@@ -43,7 +40,6 @@ export default function Navbar() {
         >
           Dashboard
         </NavLink>
-
         <NavLink
           to="/users"
           className={({ isActive }) =>
@@ -52,7 +48,6 @@ export default function Navbar() {
         >
           Users
         </NavLink>
-
         <NavLink
           to="/trees"
           className={({ isActive }) =>
@@ -61,7 +56,6 @@ export default function Navbar() {
         >
           Trees
         </NavLink>
-
         <NavLink
           to="/payment"
           className={({ isActive }) =>
@@ -70,7 +64,6 @@ export default function Navbar() {
         >
           Payment
         </NavLink>
-
         <NavLink
           to="/progress"
           className={({ isActive }) =>
@@ -79,16 +72,9 @@ export default function Navbar() {
         >
           Progress
         </NavLink>
-
       </div>
-
-      {/*BELL AND PROFILE*/}
+      {/*PROFILE*/}
       <div className="profile-wrapper">
-        {/*BELL*/}
-        <div className="bell-wrapper">
-          <Bell size={20} className="bell-icon" />
-          <div className="bell-dot"></div>
-        </div>
         {/*PROFILE*/}
         <div className="profile-dropdown-wrapper">
           <div
@@ -99,13 +85,11 @@ export default function Navbar() {
               <h4>{user.name}</h4>
               <p>{user.username}</p>
             </div>
-
             <ChevronDown
               size={18}
               className="dropdown-icon"
             />
           </div>
-
           {/*DROPDOWN*/}
           {showDropdown && (
             <div className="profile-dropdown">

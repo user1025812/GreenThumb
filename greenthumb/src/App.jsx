@@ -32,7 +32,7 @@ function AppContent() {
     return (
         <div className={isDashboard ? "dashboard-root" : "App min-h-screen bg-white font-sans text-gray-900"}>
             {!isDashboard && <Navbar />}
-            {!isDashboard && <QuickLink />}
+            {/* {!isDashboard && <QuickLink />} */}
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/home" element={<Home />} />
