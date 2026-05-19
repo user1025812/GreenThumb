@@ -49,7 +49,7 @@ function HomeStats() {
 
         <div className="grid md:grid-cols-2 gap-20 items-center">
           <div className="flex flex-col items-center">
-            <p className="font-bold text-black-900 mb-2 text-3xl homestats-chart-title">
+            <p className="font-bold text-black-900 mb-2 text-3xl homestats-chart-title" style={{ color: "#084C32" }}>
               Trees Planted
             </p>
             

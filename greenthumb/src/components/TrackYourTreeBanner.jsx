@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { FaSeedling } from "react-icons/fa";
 import "../Style.css";
 import TreePieChart from "./TreePieChart";
-import TreePieCount from "./TreePieCount";
+// import TreePieCount from "./TreePieCount";
+// import HomeStats from "./HomeStats";
 import TreeMap from "./TreeMap";
 import TrackProgressImg from "./TreeProgressImg";
+import HomeStats from "./HomeStats";
 
 const TrackYourTreeBanner = () => {
     const [allImagesShown, setAllImagesShown] = useState(false);
@@ -36,11 +38,11 @@ const TrackYourTreeBanner = () => {
                     </p>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-xs sm:max-w-sm">
+                <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-xs sm:max-w-sm" style={{marginRight:"4.5rem"}}>
                     <h2 className="text-lg font-bold mb-6" style={{color:"#084C32", marginBottom:"1rem"}}>Track Your Tree</h2>
                     <div className="flex flex-col gap-4">
                         <div className="flex items-center border border-gray-200 rounded-lg px-4 py-2 gap-2">
-                            <MdOutlineEmail size={20} />
+                            <MdOutlineEmail size={20} color="#084C32" />
                             <input
                                 type="email"
                                 placeholder="Email Address"
@@ -48,7 +50,7 @@ const TrackYourTreeBanner = () => {
                             />
                         </div>
                         <div className="flex items-center border border-gray-200 rounded-lg px-4 py-2 gap-2">
-                            <LuKeyRound size={20} />
+                            <LuKeyRound size={20} color="#084C32" />
                             <input
                                 type="text"
                                 placeholder="Unique Tree ID"
@@ -64,13 +66,14 @@ const TrackYourTreeBanner = () => {
         </section>
 
         <section>
-            <h1 className="trackbanner-title" style={{textAlign:"center", marginTop:"4rem", marginBottom:"4rem"}}>
+            {/* <h1 className="trackbanner-title" style={{textAlign:"center", marginTop:"4rem", marginBottom:"4rem"}}>
                 See the Change You're Making
-            </h1>
+            </h1> */}
 
             <div className="flex flex-row items-center justify-center gap-40 px-8" style={{marginBottom:"4rem"}}>
-                <TreePieChart />
-                <TreePieCount />
+                {/* <TreePieChart /> */}
+                {/* <TreePieCount /> */}
+                <HomeStats />   
             </div>
 
             <div style={{marginBottom:"4rem"}}>
